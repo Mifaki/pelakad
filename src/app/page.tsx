@@ -12,10 +12,9 @@ export default async function HomePage() {
           Pelekad
         </h1>
         <div className="space-y-4">
-          <p>Just ignore this for now it's just for testing the database</p>
           <div className="flex items-center justify-center gap-4">
             {posts.map((item, index) => (
-              <PostCard id={item.id} name={item.name ? item.name : ''} />
+              <PostCard key={index + 1} id={item.id} name={item.name ? item.name : ''} />
             ))}
           </div>
         </div>
