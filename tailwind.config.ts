@@ -1,12 +1,21 @@
-import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import { type Config } from 'tailwindcss';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 export default {
-  content: ["./src/**/*.tsx"],
+  content: ['./src/**/*.tsx'],
   theme: {
+    container: {
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
+    },
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        sans: ['var(--font-geist-sans)', ...fontFamily.sans],
       },
       fontSize: {
         'caption-1': ['14px', 'auto'],
@@ -27,9 +36,10 @@ export default {
         'pd-primary': '#96B8E6',
         'pd-primary-action': '#3B82F6',
         'pd-primary-bold': '#1F1688',
+        'pd-primary-text': '#19397F',
         'pd-accent': '#BE0575',
-        'pd-gray': '#454F5C'
-      }
+        'pd-gray': '#454F5C',
+      },
     },
   },
   plugins: [],
