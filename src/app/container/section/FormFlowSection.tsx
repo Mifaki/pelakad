@@ -1,7 +1,7 @@
 const FormFlowSection = () => {
   return (
-    <section className="container bg-pd-primary">
-      <h2 className="mb-12 pt-[100px] text-center text-heading-4 font-bold text-pd-primary-text">
+    <section className="container bg-pd-primary pb-20">
+      <h2 className="mb-9 pt-[100px] text-center text-heading-4 font-bold">
         Alur Pendaftaran
       </h2>
       <img

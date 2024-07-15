@@ -1,8 +1,8 @@
-import React from 'react';
-import HeroSection from './section/HeroSection';
-import TopNavbar from '~/shared/container/navigation/TopNavbar';
-import ServiceSection from './section/ServiceSection';
+import Footer from '~/shared/container/Footer/Footer';
 import FormFlowSection from './section/FormFlowSection';
+import HeroSection from './section/HeroSection';
+import ServiceSection from './section/ServiceSection';
+import TopNavbar from '~/shared/container/navigation/TopNavbar';
 
 const LandingContainer = () => {
   return (
@@ -11,6 +11,7 @@ const LandingContainer = () => {
       <HeroSection />
       <ServiceSection />
       <FormFlowSection />
+      <Footer />
     </>
   );
 };
