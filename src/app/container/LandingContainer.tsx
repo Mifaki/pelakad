@@ -3,6 +3,7 @@ import FormFlowSection from './section/FormFlowSection';
 import HeroSection from './section/HeroSection';
 import ServiceSection from './section/ServiceSection';
 import TopNavbar from '~/shared/container/navigation/TopNavbar';
+import KtpContainer from '~/app/KTP/container/KtpContainer';
 
 const LandingContainer = () => {
   return (
@@ -11,6 +12,7 @@ const LandingContainer = () => {
       <HeroSection />
       <ServiceSection />
       <FormFlowSection />
+      <KtpContainer />
       <Footer />
     </>
   );
