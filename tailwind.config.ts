@@ -36,6 +36,7 @@ export default {
         'pd-primary': '#96B8E6',
         'pd-primary-action': '#3B82F6',
         'pd-primary-bold': '#1F1688',
+        'pd-primary-text': '#19397F',
         'pd-accent': '#BE0575',
         'pd-gray': '#454F5C',
       },
