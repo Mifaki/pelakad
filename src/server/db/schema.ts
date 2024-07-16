@@ -1,9 +1,11 @@
 import { sql } from 'drizzle-orm';
 import {
-  index,
+  pgTable,
+  pgEnum,
   pgTableCreator,
-  serial,
+  text,
   timestamp,
+  uuid,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -15,19 +17,29 @@ import {
  */
 export const createTable = pgTableCreator((name) => `pelakad_${name}`);
 
-export const posts = createTable(
-  'post',
-  {
-    id: serial('id').primaryKey(),
-    name: varchar('name', { length: 256 }),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
-      () => new Date(),
-    ),
-  },
-  (example) => ({
-    nameIndex: index('name_idx').on(example.name),
-  }),
-);
+export const requestStatusEnum = pgEnum('request_status', [
+  'menunggu',
+  'diproses',
+  'dikembalikan',
+  'selesai',
+]);
+
+export const ktpRequest = pgTable('pelakad_ktp_request', {
+  id: uuid('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID())
+    .notNull(),
+  full_name: varchar('full_name', { length: 256 }).notNull(),
+  phone_number: varchar('phone_number', { length: 256 }).notNull(),
+  nik_id: varchar('nik_id', { length: 256 }).notNull(),
+  kk_id: varchar('kk_id', { length: 256 }).notNull(),
+  reason: text('reason').notNull(),
+  request_status: requestStatusEnum('request_status').notNull(),
+  feedback: text('reason'),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
