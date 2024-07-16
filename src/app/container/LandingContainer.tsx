@@ -12,7 +12,6 @@ const LandingContainer = () => {
       <HeroSection />
       <ServiceSection />
       <FormFlowSection />
-      <KtpContainer />
       <Footer />
     </>
   );
