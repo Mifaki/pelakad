@@ -11,10 +11,6 @@ const KtpContainer = () => {
     console.log('Form Values:', values);
   };
 
-  const onRadioChange = (e: any) => {
-    setRadioValue(e.target.value);
-  };
-
   return (
     <>
       <div className="ktp-form-container">
