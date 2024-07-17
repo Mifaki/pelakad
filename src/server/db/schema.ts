@@ -4,7 +4,9 @@ import {
   pgEnum,
   pgTableCreator,
   text,
+  text,
   timestamp,
+  uuid,
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core';
