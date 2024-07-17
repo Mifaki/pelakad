@@ -7,3 +7,11 @@ export interface IRootKTP extends IGeneralRequest {
   kk_id: string;
   reason: 'baru' | 'hilang' | 'pindah datang' | 'rusak';
 }
+
+export interface IPayloadKTP {
+  full_name: string;
+  phone_number: string;
+  nik_id: string;
+  kk_id: string;
+  reason: 'baru' | 'hilang' | 'pindah datang' | 'rusak';
+}
