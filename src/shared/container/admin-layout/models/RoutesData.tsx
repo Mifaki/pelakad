@@ -27,8 +27,8 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
   },
   {
     label: <div className="text-ny-gray-300 text-caption-1 font-[400]">KK</div>,
-    key: '/dashboard/ktp',
-    path: 'dashboard-ktp',
+    key: '/dashboard/kk',
+    path: 'dashboard-kk',
     icon: <DashboardIcon />,
     components: <DashboardContainer />,
     show: true,
@@ -39,8 +39,8 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
         Akte Kelahiran
       </div>
     ),
-    key: '/dashboard/ktp',
-    path: 'dashboard-ktp',
+    key: '/dashboard/akte-kelahiran',
+    path: 'dashboard-akte-kelahiran',
     icon: <DashboardIcon />,
     components: <DashboardContainer />,
     show: true,
@@ -51,8 +51,8 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
         Akte kematian
       </div>
     ),
-    key: '/dashboard/ktp',
-    path: 'dashboard-ktp',
+    key: '/dashboard/akte-kematian',
+    path: 'dashboard-akte-kematian',
     icon: <DashboardIcon />,
     components: <DashboardContainer />,
     show: true,
