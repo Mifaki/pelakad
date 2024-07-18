@@ -2,8 +2,8 @@
 
 import { db } from '~/server/db';
 import { eq } from 'drizzle-orm';
-import { ktpRequest } from '~/server/db/schema';
-import { type IRootKTP } from '../models/ktpinterfaces';
+import { type IPayloadKTP, type IRootKTP } from '../models/ktpinterfaces';
+import { ktpRequest, requestStatusEnum } from '~/server/db/schema';
 import { type IGeneralAPIResponse } from '../models/generalInterfaces';
 
 export async function getAllKTPRequest(): Promise<
@@ -117,6 +117,41 @@ export async function declineKTPRequest(
       result.data = updatedRequest as IRootKTP;
     } else {
       throw new Error('KTP request not found');
+    }
+  } catch (error) {
+    result.error =
+      error instanceof Error ? error : new Error('An unknown error occurred');
+  } finally {
+    result.isLoading = false;
+  }
+
+  return result;
+}
+
+export async function addKTPRequest(
+  payload: IPayloadKTP,
+): Promise<IGeneralAPIResponse<IRootKTP>> {
+  const result: IGeneralAPIResponse<IRootKTP> = {
+    data: null,
+    error: null,
+    isLoading: true,
+  };
+
+  try {
+    const newRequest = {
+      ...payload,
+      request_status: requestStatusEnum.enumValues[0] as 'menunggu',
+    };
+
+    const [createdRequest] = await db
+      .insert(ktpRequest)
+      .values(newRequest)
+      .returning();
+
+    if (createdRequest) {
+      result.data = createdRequest as IRootKTP;
+    } else {
+      throw new Error('Failed to create KTP request');
     }
   } catch (error) {
     result.error =
