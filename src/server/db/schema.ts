@@ -22,6 +22,7 @@ export const requestStatusEnum = pgEnum('request_status', [
   'diproses',
   'dikembalikan',
   'selesai',
+  'tanda-tangan',
 ]);
 
 export const ktpRequest = pgTable('pelakad_ktp_request', {

@@ -1,0 +1,1 @@
+ALTER TYPE "request_status" ADD VALUE 'Tanda Tangan';
