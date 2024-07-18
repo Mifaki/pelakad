@@ -35,7 +35,7 @@ export const ktpRequest = pgTable('pelakad_ktp_request', {
   kk_id: varchar('kk_id', { length: 256 }).notNull(),
   reason: text('reason').notNull(),
   request_status: requestStatusEnum('request_status').notNull(),
-  feedback: text('reason'),
+  feedback: text('feedback'),
   createdAt: timestamp('created_at', { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
