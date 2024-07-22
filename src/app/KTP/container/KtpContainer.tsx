@@ -1,80 +1,64 @@
 'use client';
 
+import { Button, type RadioChangeEvent, message } from 'antd';
+import { type TRequestReason } from '~/shared/models/generalInterfaces';
+import { useForm } from 'antd/es/form/Form';
+import AddKTPRequestForm from './form/AddKTPRequestForm';
 import React, { useState } from 'react';
-import { Form, Input, Button, Radio } from 'antd';
+import { type IPayloadKTP } from '~/shared/models/ktpinterfaces';
+import { submitKTPRequest } from '~/shared/actions/repositories/KTPService';
 
-const KtpContainer = () => {
-  const [form] = Form.useForm();
-  const [radioValue, setRadioValue] = useState('Baru');
+const KtpContainer: React.FC = () => {
+  const [form] = useForm();
+  const [radioValue, setRadioValue] = useState<TRequestReason>('baru');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleMutate = (values: any) => {
-    console.log('Form Values:', values);
+  const handleMutate = async (values: IPayloadKTP) => {
+    console.log(values);
+
+    setIsLoading(true);
+    try {
+      await submitKTPRequest(values);
+      message.success('Permohonan KTP berhasil diajukan');
+      form.resetFields();
+    } catch (error) {
+      message.error('Gagal mengajukan permohonan KTP, silahkan coba kembali');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onRadioChange = (e: RadioChangeEvent) => {
+    setRadioValue(e.target.value as TRequestReason);
   };
 
   return (
-    <>
-      <div className="ktp-form-container">
-        <Form
+    <section className="container overflow-hidden bg-pd-primary">
+      <div className="mt-14 rounded-2xl border-2 border-white bg-[#B6CEEE] px-5 pt-4">
+        <h2 className="my text-center text-heading-5 font-semibold">
+          Data Pemohon
+        </h2>
+        <h3 className="pt-3 text-center text-heading-6 font-semibold">
+          Kartu Tanda Penduduk
+        </h3>
+        <AddKTPRequestForm
           form={form}
-          layout="vertical"
-          onFinish={handleMutate}
-          className="p-4"
-        >
-          <Form.Item
-            name="kontak"
-            label="Kontak (WhatsApp/Line)"
-            rules={[{ required: true, message: 'Kontak diperlukan!' }]}
-          >
-            <Input placeholder="08xxxxxxxxxx" />
-          </Form.Item>
-
-          <Form.Item
-            name="namaLengkap"
-            label="Nama Lengkap"
-            rules={[{ required: true, message: 'Nama Lengkap diperlukan!' }]}
-          >
-            <Input placeholder="Masukkan nama lengkap" />
-          </Form.Item>
-
-          <Form.Item
-            name="nik"
-            label="No. Induk Kependudukan"
-            rules={[{ required: true, message: 'NIK diperlukan!' }]}
-          >
-            <Input placeholder="3522xxxxxxxxxxxx" />
-          </Form.Item>
-
-          <Form.Item
-            name="nkk"
-            label="Nomor Kartu Keluarga"
-            rules={[{ required: true, message: 'NKK diperlukan!' }]}
-          >
-            <Input placeholder="3522xxxxxxxxxxxx" />
-          </Form.Item>
-
-          <Form.Item
-            name="alasanPengajuan"
-            label="Alasan Pengajuan"
-            rules={[
-              { required: true, message: 'Pilih salah satu alasan pengajuan!' },
-            ]}
-          >
-            <Radio.Group>
-              <Radio value="baru">Baru</Radio>
-              <Radio value="pindah datang">Pindah Datang</Radio>
-              <Radio value="hilang">Hilang</Radio>
-              <Radio value="rusak">Rusak</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+          handleMutate={handleMutate}
+          handleRadioChange={onRadioChange}
+          readioValue={radioValue}
+        />
       </div>
-    </>
+      <div className="mb-5 mt-5 flex justify-center">
+        <Button
+          className="h-12 w-full bg-[#3B82F6] text-lg font-semibold"
+          type="primary"
+          onClick={() => form.submit()}
+          loading={isLoading}
+        >
+          Selesai
+        </Button>
+      </div>
+    </section>
   );
 };
 
