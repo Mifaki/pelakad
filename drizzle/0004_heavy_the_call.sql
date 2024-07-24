@@ -1,0 +1,1 @@
+ALTER TABLE "pelakad_birth_certificate_request" ADD COLUMN "marriage_certificate_url" varchar(256) NOT NULL;

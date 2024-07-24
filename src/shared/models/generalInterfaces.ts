@@ -17,3 +17,8 @@ export type TRequestStatus =
   | 'diproses';
 
 export type TRequestReason = 'baru' | 'pindah datang' | 'hilang' | 'rusak';
+
+export interface IStep {
+  title: string;
+  content: React.ReactNode;
+}
