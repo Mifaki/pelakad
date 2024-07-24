@@ -1,7 +1,7 @@
 'use client';
 
 import { type IStep } from '~/shared/models/generalInterfaces';
-import { message } from 'antd';
+import { Form, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';
 import ApplicantIdentityForm from './form/ApplicantIdentityForm';
@@ -11,9 +11,12 @@ import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
 import { type IAktaLahirPayload } from '~/shared/models/aktalahirinterfaces';
 import { submitBirthCertificateRequest } from '~/shared/actions/repositories/BirthCertificateService';
 
+type FormData = Partial<IAktaLahirPayload>;
+
 const AktaLahirContainer = () => {
-  const [form] = useForm();
-  const [isLoading, setIsLoading] = useState(false);
+  const [form] = useForm<FormData>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({});
 
   const steps: IStep[] = [
     {
@@ -26,25 +29,55 @@ const AktaLahirContainer = () => {
     },
   ];
 
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState<number>(0);
 
-  const next = () => {
-    setCurrent(current + 1);
+  const next = async () => {
+    try {
+      const values = await form.validateFields();
+      setFormData((prevData) => ({ ...prevData, ...values }));
+      setCurrent(current + 1);
+    } catch (error) {
+      console.error('Validation failed:', error);
+    }
   };
 
   const prev = () => {
     setCurrent(current - 1);
   };
 
-  const handleMutate = async (values: IAktaLahirPayload) => {
-    setIsLoading(true);
+  const handleMutate = async () => {
     try {
-      await submitBirthCertificateRequest(values);
-      message.success('Permohonan KTP berhasil diajukan');
+      setIsLoading(true);
+      const currentStepValues = await form.validateFields();
+      const allFormData: FormData = { ...formData, ...currentStepValues };
+
+      const payload: IAktaLahirPayload = {
+        full_name: allFormData.full_name ?? '',
+        phone_number: allFormData.phone_number ?? '',
+        nik_id: allFormData.nik_id ?? '',
+        kk_id: allFormData.kk_id ?? '',
+        family_card_image: allFormData.family_card_image ?? [],
+        father_identity_card_url: allFormData.father_identity_card_url ?? '',
+        mother_identity_card_url: allFormData.mother_identity_card_url ?? '',
+        out_of_wedlock_letter_url: allFormData.out_of_wedlock_image_url ?? '',
+        marriage_certificate_url: allFormData.marriage_certificate_url ?? [],
+        witness_1_identity_card_url:
+          allFormData.witness_1_identity_card_url ?? '',
+        witness_2_identity_card_url:
+          allFormData.witness_2_identity_card_url ?? '',
+        marriage_book_url: allFormData.marriage_book_url ?? [],
+        out_of_wedlock_image_url: allFormData.out_of_wedlock_image_url,
+      };
+
+      await submitBirthCertificateRequest(payload);
+      message.success('Permohonan Akta Lahir berhasil diajukan');
       form.resetFields();
+      setFormData({});
     } catch (error) {
-      console.log(error);
-      message.error('Gagal mengajukan permohonan KTP, silahkan coba kembali');
+      console.error(error);
+      message.error(
+        'Gagal mengajukan permohonan Akta Lahir, silahkan coba kembali',
+      );
     } finally {
       setIsLoading(false);
     }
@@ -59,9 +92,12 @@ const AktaLahirContainer = () => {
         <h3 className="text-center text-heading-6 font-semibold">
           Kartu Tanda Penduduk
         </h3>
-        <CustomSteps steps={steps} current={current} />
+        <Form form={form} layout="vertical" onFinish={handleMutate}>
+          <CustomSteps steps={steps} current={current} />
+        </Form>
       </div>
       <CustomStepperButton
+        form={form}
         current={current}
         stepsLength={steps.length}
         onNext={next}

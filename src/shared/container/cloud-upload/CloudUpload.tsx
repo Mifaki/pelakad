@@ -9,9 +9,10 @@ interface ICloudUpload {
   name: string;
   label?: string;
   form: any;
+  multipleFile?: boolean;
 }
 
-const CloudUpload = ({ name, form }: ICloudUpload) => {
+const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handleChange = async ({
@@ -70,7 +71,7 @@ const CloudUpload = ({ name, form }: ICloudUpload) => {
 
   return (
     <Upload
-      multiple
+      multiple={multipleFile}
       beforeUpload={() => false}
       onChange={handleChange}
       onRemove={handleRemove}

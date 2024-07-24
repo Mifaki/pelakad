@@ -1,7 +1,8 @@
-import { Button } from 'antd';
+import { Button, type FormInstance } from 'antd';
 
 interface ICustomButtonStepper {
   current: number;
+  form: FormInstance<any>;
   stepsLength: number;
   onNext: () => void;
   onPrev: () => void;
@@ -14,15 +15,31 @@ const CustomStepperButton = ({
   stepsLength,
   onNext,
   onPrev,
+  form,
   onComplete,
   mutateLoading,
 }: ICustomButtonStepper) => {
+  const handleNextOrSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+
+      if (current === stepsLength - 1) {
+        const allFormData = form.getFieldsValue(true);
+        onComplete(allFormData);
+      } else {
+        onNext();
+      }
+    } catch (error) {
+      console.error('Validation failed:', error);
+    }
+  };
+
   if (current === 0) {
     return (
       <div className="flex justify-center">
         <Button
           className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
-          onClick={onNext}
+          onClick={handleNextOrSubmit}
         >
           Lanjut
         </Button>
@@ -33,7 +50,7 @@ const CustomStepperButton = ({
       <div className="flex flex-col items-center space-y-4">
         <Button
           className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
-          onClick={onComplete}
+          onClick={handleNextOrSubmit}
           loading={mutateLoading}
         >
           Selesai
@@ -51,7 +68,7 @@ const CustomStepperButton = ({
       <div className="flex flex-col items-center space-y-4">
         <Button
           className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
-          onClick={onNext}
+          onClick={handleNextOrSubmit}
         >
           Lanjut
         </Button>

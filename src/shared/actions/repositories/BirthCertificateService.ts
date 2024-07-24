@@ -29,7 +29,7 @@ export async function submitBirthCertificateRequest(
     typeof data === 'object' &&
     data !== null &&
     'id' in data &&
-    'name' in data &&
+    'full_name' in data &&
     'phone_number' in data &&
     'nik_id' in data &&
     'kk_id' in data &&

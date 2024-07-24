@@ -47,7 +47,7 @@ export const birthCertificateRequest = createTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID())
       .notNull(),
-    name: varchar('full_name', { length: 256 }).notNull(),
+    full_name: varchar('full_name', { length: 256 }).notNull(),
     phone_number: varchar('phone_number', { length: 256 }).notNull(),
     nik_id: varchar('nik_id', { length: 256 }).notNull(),
     kk_id: varchar('kk_id', { length: 256 }).notNull(),

@@ -6,6 +6,7 @@ import KKoHData from './Form/KKHoHData';
 import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
 import { type IStep } from '~/shared/models/generalInterfaces';
 import CustomStepperButton from '~/shared/container/custom-steps/CustomStepperButton';
+import { useForm } from 'antd/es/form/Form';
 
 const steps: IStep[] = [
   {
@@ -27,6 +28,7 @@ const steps: IStep[] = [
 ];
 
 const KkContainer: React.FC = () => {
+  const [form] = useForm();
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
@@ -46,6 +48,7 @@ const KkContainer: React.FC = () => {
     <div className="bg-pd-primary p-4">
       <CustomSteps steps={steps} current={current} />
       <CustomStepperButton
+        form={form}
         current={current}
         stepsLength={steps.length}
         onNext={next}
