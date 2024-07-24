@@ -22,6 +22,20 @@
       "when": 1721336005111,
       "tag": "0002_cool_the_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1721662048698,
+      "tag": "0003_cool_susan_delgado",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1721670826665,
+      "tag": "0004_heavy_the_call",
+      "breakpoints": true
     }
   ]
 }
