@@ -11,11 +11,13 @@ import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
 import { type IAktaLahirPayload } from '~/shared/models/aktalahirinterfaces';
 import { submitBirthCertificateRequest } from '~/shared/actions/repositories/BirthCertificateService';
 import useEnsureArray from '~/shared/usecase/useEnsureArray';
+import { useRouter } from 'next/navigation';
 
 type FormData = Partial<IAktaLahirPayload>;
 
 const AktaLahirContainer = () => {
   const ensureArray = useEnsureArray;
+  const router = useRouter();
 
   const [form] = useForm<FormData>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -23,11 +25,13 @@ const AktaLahirContainer = () => {
 
   const steps: IStep[] = [
     {
-      title: 'Pemohon',
+      title: 'Pengajuan Akta Lahir ',
+      subTitle: 'Data Pemohon',
       content: <ApplicantIdentityForm form={form} />,
     },
     {
-      title: 'Akta Lahir',
+      title: 'Pengajuan Akta Lahir Baru',
+      subTitle: 'Data Akta Lahir',
       content: <BirthCertificateDataForm form={form} />,
     },
   ];
@@ -84,6 +88,7 @@ const AktaLahirContainer = () => {
       message.success('Permohonan Akta Lahir berhasil diajukan');
       form.resetFields();
       setFormData({});
+      router.push('/');
     } catch (error) {
       console.error(error);
       message.error(
@@ -95,13 +100,13 @@ const AktaLahirContainer = () => {
   };
 
   return (
-    <div className="container min-h-screen w-full bg-pd-primary py-14">
+    <div className="container min-h-screen w-full max-w-[100vw] bg-pd-primary py-14">
       <div className="mb-6 rounded-2xl border-2 border-white bg-[#B6CEEE] px-5 py-4">
-        <h2 className="mb-3 text-center text-heading-5 font-semibold">
-          Data Pemohon
+        <h2 className="mb-2 text-center text-heading-5 font-semibold">
+          {steps[current]?.title}
         </h2>
-        <h3 className="text-center text-heading-6 font-semibold">
-          Kartu Tanda Penduduk
+        <h3 className="mb-4 text-center text-heading-6 font-semibold">
+          {steps[current]?.subTitle}
         </h3>
         <Form form={form} layout="vertical" onFinish={handleMutate}>
           <CustomSteps steps={steps} current={current} />

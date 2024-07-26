@@ -84,8 +84,38 @@ const DashboardImage: React.FC<DashboardImageProps> = ({
   if (!src) return null;
 
   return isMultipleImages ? (
-    <Image.PreviewGroup>
-      {(src).map((url, index) => renderImage(url, index))}
+    <Image.PreviewGroup
+      preview={{
+        toolbarRender: (
+          _,
+          {
+            image: { url: imageUrl },
+            transform: { scale },
+            actions: {
+              onFlipY,
+              onFlipX,
+              onRotateLeft,
+              onRotateRight,
+              onZoomOut,
+              onZoomIn,
+              onReset,
+            },
+          },
+        ) => (
+          <Space size={12} className="toolbar-wrapper">
+            <DownloadOutlined onClick={() => onDownload(imageUrl)} />
+            <SwapOutlined rotate={90} onClick={onFlipY} />
+            <SwapOutlined onClick={onFlipX} />
+            <RotateLeftOutlined onClick={onRotateLeft} />
+            <RotateRightOutlined onClick={onRotateRight} />
+            <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
+            <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
+            <UndoOutlined onClick={onReset} />
+          </Space>
+        ),
+      }}
+    >
+      {src.map((url, index) => renderImage(url, index))}
     </Image.PreviewGroup>
   ) : (
     renderImage(Array.isArray(src) ? src[0] : src)

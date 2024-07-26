@@ -21,5 +21,6 @@ export type TRequestReason = 'baru' | 'pindah datang' | 'hilang' | 'rusak';
 
 export interface IStep {
   title: string;
+  subTitle?: string;
   content: React.ReactNode;
 }

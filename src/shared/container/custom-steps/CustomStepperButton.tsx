@@ -38,7 +38,7 @@ const CustomStepperButton = ({
     return (
       <div className="flex justify-center">
         <Button
-          className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
+          className="h-12 w-full rounded-lg bg-blue-600 text-lg font-semibold text-white md:w-[48%]"
           onClick={handleNextOrSubmit}
         >
           Lanjut
@@ -47,36 +47,36 @@ const CustomStepperButton = ({
     );
   } else if (current === stepsLength - 1) {
     return (
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:justify-between md:space-y-0">
         <Button
-          className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
+          className="h-12 w-full rounded-lg border border-blue-600 bg-white text-lg font-semibold text-blue-600 md:w-[48%]"
+          onClick={onPrev}
+        >
+          Kembali
+        </Button>
+        <Button
+          className="h-12 w-full rounded-lg bg-blue-600 text-lg font-semibold text-white md:w-[48%]"
           onClick={handleNextOrSubmit}
           loading={mutateLoading}
         >
           Selesai
         </Button>
-        <Button
-          className="h-12 w-80 rounded-lg border border-blue-600 bg-white text-lg font-semibold text-blue-600"
-          onClick={onPrev}
-        >
-          Kembali
-        </Button>
       </div>
     );
   } else {
     return (
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:justify-between md:space-y-0">
         <Button
-          className="h-12 w-80 rounded-lg bg-blue-600 text-lg font-semibold text-white"
-          onClick={handleNextOrSubmit}
-        >
-          Lanjut
-        </Button>
-        <Button
-          className="h-12 w-80 rounded-lg border border-blue-600 bg-white text-lg font-semibold text-blue-600"
+          className="h-12 w-full rounded-lg border border-blue-600 bg-white text-lg font-semibold text-blue-600 md:w-[48%]"
           onClick={onPrev}
         >
           Kembali
+        </Button>
+        <Button
+          className="h-12 w-full rounded-lg bg-blue-600 text-lg font-semibold text-white md:w-[48%]"
+          onClick={handleNextOrSubmit}
+        >
+          Lanjut
         </Button>
       </div>
     );

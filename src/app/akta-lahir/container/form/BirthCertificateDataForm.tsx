@@ -1,5 +1,6 @@
 import { Form, type FormInstance } from 'antd';
 import React from 'react';
+import DownloadButton from '~/shared/container/Button/DownloadButton';
 import CloudUpload from '~/shared/container/cloud-upload/CloudUpload';
 import CusttomInputLabel from '~/shared/container/custom-input-label/CustomInputLabel';
 
@@ -86,11 +87,24 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             },
           ]}
         >
-          <CloudUpload name="marriage_certificate_url" form={form} />
+          <CloudUpload
+            name="marriage_certificate_url"
+            form={form}
+            multipleFile={false}
+          />
           <p className="mt-2 text-xs font-medium">
             *Unggah Surat Kebenaran Kelahiran jika Surat Keterangan Kelahiran
             dari rumah sakit Tidak ada
           </p>
+          <div className="mt-4 flex items-start justify-between">
+            <p className="mt-2 text-xs font-semibold">
+              SPTJM Kebenaran Kelahiran
+            </p>
+            <DownloadButton
+              downloadUrl="https://utfs.io/f/d8529af7-c6a0-428e-8385-b3f90a79b83c-2zukl9.pdf"
+              fileName="SPTJM Kebenaran Kelahiran"
+            />
+          </div>
         </Form.Item>
       </div>
 
@@ -105,16 +119,25 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
           }
           rules={[
             {
-              required: true,
+              required: false,
               message: 'Buku nikah Legalisir KUA diperlukan!',
             },
           ]}
         >
           <CloudUpload name="marriage_book_url" form={form} />
           <p className="mt-2 text-xs font-medium">
-            *Unggah Surat Kebenaran Kelahiran jika Surat Keterangan Kelahiran
-            dari rumah sakit Tidak ada
+            *Unggah SPTJM Kebenaran suami Istri jika tidak memiliki Buku Nikah
+            Legalisir KUA (Opsional jika belum menikah)
           </p>
+          <div className="mt-4 flex items-start justify-between">
+            <p className="mt-2 text-xs font-semibold">
+              Surat Kebenaran Suami Istri
+            </p>
+            <DownloadButton
+              downloadUrl="https://utfs.io/f/af316ec9-e530-4845-a376-d906de045616-9y2b3.pdf"
+              fileName="Surat Kebenaran Suami Istri"
+            />
+          </div>
         </Form.Item>
 
         <Form.Item
@@ -138,6 +161,15 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             *Surat pernyataan luar nikah disertakan bayi yang lahir diluar
             pernikahan/tanggal pernikahan orangtua sesudah kelahiran bayi.
           </p>
+          <div className="mt-4 flex items-start justify-between">
+            <p className="mt-2 text-xs font-semibold">
+              Surat Pernyataan Luar Nikah
+            </p>
+            <DownloadButton
+              downloadUrl="https://utfs.io/f/ae6d8572-f10c-4494-b54e-88eca10100e8-g4c9qd.pdf"
+              fileName="Surat Pernyataan Luar Nikah"
+            />
+          </div>
         </Form.Item>
       </div>
     </div>
