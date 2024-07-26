@@ -10,10 +10,13 @@ import CustomStepperButton from '~/shared/container/custom-steps/CustomStepperBu
 import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
 import { type IAktaLahirPayload } from '~/shared/models/aktalahirinterfaces';
 import { submitBirthCertificateRequest } from '~/shared/actions/repositories/BirthCertificateService';
+import useEnsureArray from '~/shared/usecase/useEnsureArray';
 
 type FormData = Partial<IAktaLahirPayload>;
 
 const AktaLahirContainer = () => {
+  const ensureArray = useEnsureArray;
+
   const [form] = useForm<FormData>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({});
@@ -56,16 +59,24 @@ const AktaLahirContainer = () => {
         phone_number: allFormData.phone_number ?? '',
         nik_id: allFormData.nik_id ?? '',
         kk_id: allFormData.kk_id ?? '',
-        family_card_image: allFormData.family_card_image ?? [],
-        father_identity_card_url: allFormData.father_identity_card_url ?? '',
-        mother_identity_card_url: allFormData.mother_identity_card_url ?? '',
-        out_of_wedlock_letter_url: allFormData.out_of_wedlock_image_url ?? '',
-        marriage_certificate_url: allFormData.marriage_certificate_url ?? [],
-        witness_1_identity_card_url:
-          allFormData.witness_1_identity_card_url ?? '',
-        witness_2_identity_card_url:
-          allFormData.witness_2_identity_card_url ?? '',
-        marriage_book_url: allFormData.marriage_book_url ?? [],
+        family_card_image: ensureArray(allFormData.family_card_image),
+        father_identity_card_url: ensureArray(
+          allFormData.father_identity_card_url,
+        ),
+        mother_identity_card_url: ensureArray(
+          allFormData.mother_identity_card_url,
+        ),
+        out_of_wedlock_letter_url: ensureArray(
+          allFormData.out_of_wedlock_letter_url,
+        ),
+        marriage_certificate_url: ensureArray(allFormData.marriage_book_url),
+        witness_1_identity_card_url: ensureArray(
+          allFormData.witness_1_identity_card_url,
+        ),
+        witness_2_identity_card_url: ensureArray(
+          allFormData.witness_2_identity_card_url,
+        ),
+        marriage_book_url: ensureArray(allFormData.marriage_book_url),
         out_of_wedlock_image_url: allFormData.out_of_wedlock_image_url,
       };
 

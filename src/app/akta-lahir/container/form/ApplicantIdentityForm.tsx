@@ -15,9 +15,9 @@ const ApplicantIdentityForm = ({ form }: IApplicantIdentityForm) => {
           rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
         >
           <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
-          <p className="mt-2 text-xs font-medium">
+          {/* <p className="mt-2 text-xs font-medium">
             *Nomor yang akan digunakan untuk mengirimkan notifikasi pengambilan
-          </p>
+          </p> */}
         </Form.Item>
         <Form.Item
           name="full_name"
@@ -41,7 +41,7 @@ const ApplicantIdentityForm = ({ form }: IApplicantIdentityForm) => {
             className="rounded-xl border-2"
             placeholder="3522xxxxxxxxxxxx"
           />
-          <p className="mt-2 text-xs font-medium">*Ketik (-) jika tidak ada</p>
+          {/* <p className="mt-2 text-xs font-medium">*Ketik (-) jika tidak ada</p> */}
         </Form.Item>
 
         <Form.Item
