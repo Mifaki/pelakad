@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Upload, message } from 'antd';
+import { Button, Upload, message, Progress } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 
@@ -9,10 +9,12 @@ interface ICloudUpload {
   name: string;
   label?: string;
   form: any;
+  multipleFile?: boolean;
 }
 
-const CloudUpload = ({ name, form }: ICloudUpload) => {
+const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   const handleChange = async ({
     fileList: newFileList,
@@ -33,6 +35,8 @@ const CloudUpload = ({ name, form }: ICloudUpload) => {
     setFileList(validFiles);
 
     if (validFiles.length > 0) {
+      setUploading(true);
+
       const formData = new FormData();
       validFiles.forEach((file) => {
         if (file.originFileObj) {
@@ -54,6 +58,8 @@ const CloudUpload = ({ name, form }: ICloudUpload) => {
         form.setFieldsValue({ [name]: data.urls });
       } catch (error) {
         message.error('Failed to upload files');
+      } finally {
+        setUploading(false);
       }
     }
   };
@@ -68,17 +74,32 @@ const CloudUpload = ({ name, form }: ICloudUpload) => {
     }
   };
 
+  const isUploadDisabled = !multipleFile && fileList.length > 0;
+
   return (
-    <Upload
-      multiple
-      beforeUpload={() => false}
-      onChange={handleChange}
-      onRemove={handleRemove}
-      fileList={fileList}
-      listType="picture"
-    >
-      <Button icon={<UploadOutlined />}>Unggah</Button>
-    </Upload>
+    <div>
+      <Upload
+        multiple={multipleFile}
+        beforeUpload={() => false}
+        onChange={handleChange}
+        onRemove={handleRemove}
+        fileList={fileList}
+        listType="picture"
+      >
+        <Button
+          icon={<UploadOutlined />}
+          loading={uploading}
+          disabled={isUploadDisabled}
+          className="w-fu bg-pd-primary-action text-white hover:!bg-pd-primary-action hover:!text-white"
+        >
+          {uploading
+            ? 'Uploading...'
+            : isUploadDisabled
+              ? 'File Uploaded'
+              : 'Upload'}
+        </Button>
+      </Upload>
+    </div>
   );
 };
 

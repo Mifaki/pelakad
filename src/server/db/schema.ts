@@ -47,7 +47,7 @@ export const birthCertificateRequest = createTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID())
       .notNull(),
-    name: varchar('full_name', { length: 256 }).notNull(),
+    full_name: varchar('full_name', { length: 256 }).notNull(),
     phone_number: varchar('phone_number', { length: 256 }).notNull(),
     nik_id: varchar('nik_id', { length: 256 }).notNull(),
     kk_id: varchar('kk_id', { length: 256 }).notNull(),
@@ -106,22 +106,6 @@ export const marriageBookImages = createTable('marriage_book_images', {
   ),
 });
 
-export const kuaMarriageBookImages = createTable('kua_marriage_book_images', {
-  id: uuid('id')
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID())
-    .notNull(),
-  name: varchar('full_name', { length: 256 }).notNull(),
-  image_url: varchar('image_url', { length: 256 }).notNull(),
-  request_id: uuid('request_id').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
-    () => new Date(),
-  ),
-});
-
 export const witnessIdentityCardImages = createTable(
   'witness_identity_card_images',
   {
@@ -147,7 +131,6 @@ export const birthCertificateRequestRelations = relations(
   ({ many }) => ({
     familyCardImages: many(familyCardImages),
     marriageBookImages: many(marriageBookImages),
-    kuaMarriageBookImages: many(kuaMarriageBookImages),
   }),
 );
 
@@ -166,16 +149,6 @@ export const marriageBookImagesRelations = relations(
   ({ one }) => ({
     request: one(birthCertificateRequest, {
       fields: [marriageBookImages.request_id],
-      references: [birthCertificateRequest.id],
-    }),
-  }),
-);
-
-export const kuaMarriageBookImagesRelations = relations(
-  kuaMarriageBookImages,
-  ({ one }) => ({
-    request: one(birthCertificateRequest, {
-      fields: [kuaMarriageBookImages.request_id],
       references: [birthCertificateRequest.id],
     }),
   }),
