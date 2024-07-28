@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Form, type FormInstance, Input, Radio, type RadioChangeEvent } from 'antd';
+import {
+  Form,
+  type FormInstance,
+  Input,
+  Radio,
+  type RadioChangeEvent,
+} from 'antd';
 import CusttomInputLabel from '~/shared/container/custom-input-label/CustomInputLabel';
 
 type RadioValue = 'new' | 'data_change' | 'lost' | 'damaged';
