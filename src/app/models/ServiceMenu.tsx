@@ -16,7 +16,7 @@ export const SERVICE_DATA: IServiceMenu[] = [
     desc: 'Pelayanan pembuatan KK baru, pergantian, atau penggantian hilang dengan mudah melalui layanan PELAKAD.',
     redirect_url: '/kk',
     image_url:
-      'https://utfs.io/f/ca1e6bee-39b4-450a-9a2e-8cd79f3f931a-1tf88.png',
+      'https://utfs.io/f/e7794514-10b3-454d-9f4d-a0628c82712e-c2vstl.png',
     image_position: 'end',
   },
   {
