@@ -1,6 +1,9 @@
-const FormFlowSection = () => {
+const FormFlowSection = ({ id }: { id: string }) => {
   return (
-    <section className="container max-w-[100vw] bg-pd-primary pb-20 md:bg-pd-primary-action md:bg-[url('https://utfs.io/f/095480d5-1b12-4d4e-9a4b-4898ca35c288-ywdpqa.png')]">
+    <section
+      id={id}
+      className="container max-w-[100vw] bg-pd-primary pb-20 md:bg-pd-primary-action md:bg-[url('https://utfs.io/f/095480d5-1b12-4d4e-9a4b-4898ca35c288-ywdpqa.png')]"
+    >
       <h2 className="mb-9 pt-[100px] text-center text-heading-4 font-bold md:text-heading-2 md:text-white">
         Alur Pendaftaran
       </h2>

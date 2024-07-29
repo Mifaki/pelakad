@@ -2,9 +2,12 @@ import ButtonFooter from '../Button/ButtonFooter';
 import { FacebookIcon } from '../icon/FacebookIcon';
 import { InstagramIcon } from '../icon/InstagramIcon';
 
-const Footer = () => {
+const Footer = ({ id }: { id?: string }) => {
   return (
-    <footer className="container flex w-full max-w-[100vw] flex-col items-center justify-center gap-8 bg-pd-primary-bold py-5 text-center text-white">
+    <footer
+      id={id}
+      className="container flex w-full max-w-[100vw] flex-col items-center justify-center gap-8 bg-pd-primary-bold py-5 text-center text-white"
+    >
       <div className="space-y-4">
         <h6 className="text-heading-6 font-bold">Dawuhan</h6>
         <p className="text-caption-1">

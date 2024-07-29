@@ -1,8 +1,11 @@
 import Image from 'next/image';
 
-const HeroSection = () => {
+const HeroSection = ({ id }: { id: string }) => {
   return (
-    <section className="mt-20 flex min-h-[calc(100vh-150px)] w-full flex-col items-center justify-between">
+    <section
+      id={id}
+      className="mt-20 flex min-h-[calc(100vh-150px)] w-full flex-col items-center justify-between"
+    >
       <div className="container relative flex h-[calc(80vh-150px)] max-w-[100vw] flex-col items-center md:flex-row">
         <h1 className="mb-10 text-center text-heading-3 font-bold leading-[45px] sm:text-heading-2 md:text-left md:text-heading-1 md:leading-[60px]">
           Selamat Datang di{' '}

@@ -1,9 +1,12 @@
 import { SERVICE_DATA } from '~/app/models/ServiceMenu';
 import ServiceCard from '../card/ServiceCard';
 
-const ServiceSection = () => {
+const ServiceSection = ({ id }: { id: string }) => {
   return (
-    <section className="container max-w-[100vw] overflow-hidden bg-pd-primary md:bg-[url('https://utfs.io/f/46536ca7-1783-4dbe-89d4-4566542b630c-4q1go2.png')] md:pb-[100px]">
+    <section
+      id={id}
+      className="container max-w-[100vw] overflow-hidden bg-pd-primary md:bg-[url('https://utfs.io/f/46536ca7-1783-4dbe-89d4-4566542b630c-4q1go2.png')] md:pb-[100px]"
+    >
       <h2 className="text-center text-heading-4 font-bold md:mt-[100px] md:text-heading-2">
         Layanan
       </h2>
