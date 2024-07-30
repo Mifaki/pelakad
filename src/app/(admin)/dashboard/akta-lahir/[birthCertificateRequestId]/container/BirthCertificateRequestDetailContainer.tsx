@@ -39,11 +39,33 @@ const BirthCertificateRequestDetailContainer = ({
     }
   };
 
+  const handleSignature = async () => {
+    try {
+      const result = await updateBirthCertificateRequest(id, 'tanda-tangan');
+      message.success('Berhasil update permohonan Akta Kelahiran');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
+    } catch (error) {
+      message.error(
+        'Gagal update permohonan Akta Kelahiran, silahkan coba kembali',
+      );
+    }
+  };
+
   const handleDeclineSubmit = async () => {
     try {
-      await declineBirthCertificateRequest(id, modalState.feedback);
+      const result = await declineBirthCertificateRequest(
+        id,
+        modalState.feedback,
+      );
       closeModal();
       message.success('Berhasil menolak permohonan Akta Kelahiran');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error(
         'Gagal menolak permohonan Akta Kelahiran, silahkan coba kembali',
@@ -53,8 +75,12 @@ const BirthCertificateRequestDetailContainer = ({
 
   const handleFinish = async () => {
     try {
-      await updateBirthCertificateRequest(id, 'selesai');
+      const result = await updateBirthCertificateRequest(id, 'selesai');
       message.success('Berhasil update permohonan Akta Kelahiran');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error(
         'Gagal update permohonan Akta Kelahiran, silahkan coba kembali',
@@ -72,6 +98,9 @@ const BirthCertificateRequestDetailContainer = ({
         onDecline={() => openModal(id)}
         onFinish={async () => {
           await handleFinish();
+        }}
+        onSignature={async () => {
+          await handleSignature();
         }}
         requestStatus={data?.request_status ?? 'menunggu'}
       />

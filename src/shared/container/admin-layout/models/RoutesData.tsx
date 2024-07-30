@@ -39,8 +39,8 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
         Akte Kelahiran
       </div>
     ),
-    key: '/dashboard/akte-kelahiran',
-    path: 'dashboard-akte-kelahiran',
+    key: '/dashboard/akta-lahir',
+    path: 'dashboard-akta-lahir',
     icon: <DashboardIcon />,
     components: <DashboardContainer />,
     show: true,
@@ -51,8 +51,8 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
         Akte kematian
       </div>
     ),
-    key: '/dashboard/akte-kematian',
-    path: 'dashboard-akte-kematian',
+    key: '/dashboard/akta-mati',
+    path: 'dashboard-akta-mati',
     icon: <DashboardIcon />,
     components: <DashboardContainer />,
     show: true,

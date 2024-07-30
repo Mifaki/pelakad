@@ -67,6 +67,7 @@ const KTPRequestDetailContainer = ({
         onFinish={async () => {
           await handleFinish();
         }}
+        onSignature={() => console.log('signature')}
         requestStatus={data?.request_status ?? 'menunggu'}
       />
       <DetailKTPRequestForm form={form} id={id} />

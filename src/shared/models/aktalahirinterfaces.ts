@@ -13,7 +13,6 @@ export interface IAktaLahirPayload {
   witness_1_identity_card_url: string[];
   witness_2_identity_card_url: string[];
   marriage_book_url: string[];
-  out_of_wedlock_image_url?: string;
 }
 
 export interface IRootBirthCertificate extends IGeneralRequest {

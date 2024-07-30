@@ -21,7 +21,11 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
           }
           rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
         >
-          <CloudUpload name="family_card_image" form={form} />
+          <CloudUpload
+            name="family_card_image"
+            form={form}
+            multipleFile={false}
+          />
         </Form.Item>
         <Form.Item
           name="father_identity_card_url"
@@ -141,7 +145,7 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
         </Form.Item>
 
         <Form.Item
-          name="out_of_wedlock_image_url"
+          name="out_of_wedlock_letter_url"
           label={
             <CusttomInputLabel>Surat Pernyataan Luar Nikah</CusttomInputLabel>
           }
@@ -153,7 +157,7 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
           ]}
         >
           <CloudUpload
-            name="out_of_wedlock_image_url"
+            name="out_of_wedlock_letter_url"
             form={form}
             multipleFile={false}
           />

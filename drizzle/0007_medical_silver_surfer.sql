@@ -1,0 +1,1 @@
+ALTER TABLE "pelakad_birth_certificate_request" RENAME COLUMN "out_of_wedlock_image_url" TO "out_of_wedlock_letter_url";
