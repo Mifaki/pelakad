@@ -54,7 +54,7 @@ export const birthCertificateRequest = createTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID())
       .notNull(),
-    name: varchar('full_name', { length: 256 }).notNull(),
+    full_name: varchar('full_name', { length: 256 }).notNull(),
     phone_number: varchar('phone_number', { length: 256 }).notNull(),
     nik_id: varchar('nik_id', { length: 256 }).notNull(),
     kk_id: varchar('kk_id', { length: 256 }).notNull(),
@@ -113,22 +113,6 @@ export const marriageBookImages = createTable('marriage_book_images', {
   ),
 });
 
-export const kuaMarriageBookImages = createTable('kua_marriage_book_images', {
-  id: uuid('id')
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID())
-    .notNull(),
-  name: varchar('full_name', { length: 256 }).notNull(),
-  image_url: varchar('image_url', { length: 256 }).notNull(),
-  request_id: uuid('request_id').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
-    () => new Date(),
-  ),
-});
-
 export const witnessIdentityCardImages = createTable(
   'witness_identity_card_images',
   {
@@ -148,13 +132,89 @@ export const witnessIdentityCardImages = createTable(
   },
 );
 
+export const familyCardRequest = createTable('family_card_request', {
+  id: uuid('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID())
+    .notNull(),
+  full_name: varchar('full_name', { length: 256 }).notNull(),
+  phone_number: varchar('phone_number', { length: 256 }).notNull(),
+  nik_id: varchar('nik_id', { length: 256 }).notNull(),
+  kk_id: varchar('kk_id', { length: 256 }).notNull(),
+  reason: varchar('reason', {
+    length: 256,
+  }).notNull(),
+  new_card_reason: varchar('new_card_reason', {
+    length: 256,
+  }),
+  father_identity_card_url: varchar('father_identity_card_url', {
+    length: 256,
+  }),
+  mother_identity_card_url: varchar('mother_identity_card_url', {
+    length: 256,
+  }),
+  husband_family_card_url: varchar('husband_family_card_url', {
+    length: 256,
+  }),
+  wife_family_card_url: varchar('wife_family_card_url', {
+    length: 256,
+  }),
+  husband_birth_certificate_url: varchar('husband_birth_certificate_url', {
+    length: 256,
+  }),
+  wife_birth_certificate_url: varchar('wife_birth_certificate_url', {
+    length: 256,
+  }),
+  old_family_card_url: varchar('old_family_card_url', {
+    length: 256,
+  }),
+  element_change_statement_letter_url: varchar(
+    'element_change_statement_letter_url',
+    {
+      length: 256,
+    },
+  ),
+  broken_family_card_url: varchar('broken_family_card_url', {
+    length: 256,
+  }),
+  original_family_card_url: varchar('original_family_card_url', {
+    length: 256,
+  }),
+  police_loss_report_url: varchar('police_loss_report_url', {
+    length: 256,
+  }),
+  request_status: requestStatusEnum('request_status').notNull(),
+  feedback: text('feedback'),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const supportingDocuments = createTable('supporting_documents', {
+  id: uuid('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID())
+    .notNull(),
+  name: varchar('full_name', { length: 256 }).notNull(),
+  image_url: varchar('image_url', { length: 256 }).notNull(),
+  request_id: uuid('request_id').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
 // Relations
 export const birthCertificateRequestRelations = relations(
   birthCertificateRequest,
   ({ many }) => ({
     familyCardImages: many(familyCardImages),
     marriageBookImages: many(marriageBookImages),
-    kuaMarriageBookImages: many(kuaMarriageBookImages),
   }),
 );
 
@@ -181,26 +241,6 @@ export const marriageBookImagesRelationsBirthCertificate = relations(
   ({ one }) => ({
     request: one(birthCertificateRequest, {
       fields: [marriageBookImages.request_id],
-      references: [birthCertificateRequest.id],
-    }),
-  }),
-);
-
-export const marriageBookImagesRelationsktp = relations(
-  marriageBookImages,
-  ({ one }) => ({
-    request: one(ktpRequest, {
-      fields: [marriageBookImages.request_id],
-      references: [ktpRequest.id],
-    }),
-  }),
-);
-
-export const kuaMarriageBookImagesRelations = relations(
-  kuaMarriageBookImages,
-  ({ one }) => ({
-    request: one(birthCertificateRequest, {
-      fields: [kuaMarriageBookImages.request_id],
       references: [birthCertificateRequest.id],
     }),
   }),

@@ -1,10 +1,11 @@
 import { Button } from 'antd';
+import { type TRequestStatus } from '~/shared/models/generalInterfaces';
 
 type IAdminFormHeader = {
   onAccept: () => void;
   onDecline: () => void;
   onFinish: () => void;
-  requestStatus: 'selesai' | 'dikembalikan' | 'menunggu' | 'diproses';
+  requestStatus: TRequestStatus;
 };
 
 const AdminFormHeader = ({

@@ -8,10 +8,10 @@ const LandingContainer = () => {
   return (
     <>
       <TopNavbar />
-      <HeroSection />
-      <ServiceSection />
-      <FormFlowSection />
-      <Footer />
+      <HeroSection id="beranda" />
+      <ServiceSection id="layanan" />
+      <FormFlowSection id="alur" />
+      <Footer id="kontak" />
     </>
   );
 };

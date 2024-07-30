@@ -36,6 +36,13 @@
       "when": 1721670826665,
       "tag": "0004_heavy_the_call",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1722082317351,
+      "tag": "0005_wakeful_bug",
+      "breakpoints": true
     }
   ]
 }

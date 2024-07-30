@@ -6,19 +6,21 @@ export interface IGeneralAPIResponse<T> {
 
 export interface IGeneralRequest {
   id: string;
-  request_status: 'menunggu' | 'selesai' | 'dikembalikan' | 'diproses';
-  feedback?: string;
+  request_status: TRequestStatus;
+  feedback?: string | null;
 }
 
 export type TRequestStatus =
   | 'menunggu'
   | 'selesai'
   | 'dikembalikan'
-  | 'diproses';
+  | 'diproses'
+  | 'tanda-tangan';
 
 export type TRequestReason = 'baru' | 'pindah datang' | 'hilang' | 'rusak';
 
 export interface IStep {
   title: string;
+  subTitle?: string;
   content: React.ReactNode;
 }

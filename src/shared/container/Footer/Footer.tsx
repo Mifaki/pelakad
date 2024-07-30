@@ -4,7 +4,7 @@ import ButtonFooter from '../Button/ButtonFooter';
 import { InstagramIcon } from '../icon/InstagramIcon';
 import { FacebookIcon } from '../icon/FacebookIcon';
 
-const Footer = () => {
+const Footer = ({ id }: { id?: string }) => {
   return (
     <footer className="bg-indigo-900 py-8 text-white">
       <div className="container mx-auto px-4">

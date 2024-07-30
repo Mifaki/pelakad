@@ -126,6 +126,7 @@ const KtpContainer: React.FC = () => {
         <CustomSteps steps={steps} current={current} />
       </div>
       <CustomStepperButton
+        form={form}
         current={current}
         stepsLength={steps.length}
         onNext={next}

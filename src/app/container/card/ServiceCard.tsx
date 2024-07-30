@@ -16,18 +16,18 @@ const ServiceCard = ({
   const router = useRouter();
 
   return (
-    <div className="relative">
+    <div className="relative flex h-full flex-col">
       <img
         src={image_url}
         alt={`${title} assets`}
-        className={`absolute -top-20 ${image_position === 'start' ? '-right-12' : '-left-12'}`}
+        className={`absolute -top-20 ${image_position === 'start' ? '-right-12 md:-left-12 md:-right-0' : '-left-12'}`}
       />
-      <div className="relative z-10 w-full space-y-10 rounded-[40px] border border-white border-opacity-50 bg-white bg-opacity-30 px-6 py-10 backdrop-blur-sm">
+      <div className="relative z-10 flex h-full w-full flex-col justify-between space-y-10 rounded-[40px] border border-white border-opacity-50 bg-white bg-opacity-30 px-6 py-10 backdrop-blur-sm">
         <div>
           <h4 className="text-heading-2 font-bold leading-[54px]">{title}</h4>
           <p className="text-body-1">{desc}</p>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="mt-auto flex items-center justify-center">
           <Button
             icon={<ArrowLeftIcon />}
             iconPosition="end"
