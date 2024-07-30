@@ -10,8 +10,8 @@ type IDeathCertificateDataForm = {
 
 const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
   return (
-    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-      <div className="w-full basis-1/2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex flex-col gap-4">
         <Form.Item
           name="family_card_image"
           label={<CusttomInputLabel>Kartu Keluarga</CusttomInputLabel>}
@@ -34,9 +34,6 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-      </div>
-
-      <div className="w-full basis-1/2 gap-4">
         <Form.Item
           name="deceased_identity_card_url"
           label={<CusttomInputLabel>KTP Almarhum</CusttomInputLabel>}
@@ -48,7 +45,6 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-
         <Form.Item
           name="death_certificate_url"
           label={
@@ -68,7 +64,8 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           />
         </Form.Item>
       </div>
-      <div className="w-full basis-1/2">
+
+      <div className="flex flex-col gap-4">
         <Form.Item
           name="witness_1_identity_card_url"
           label={<CusttomInputLabel>Fotokopi KTP Saksi 1</CusttomInputLabel>}
@@ -80,7 +77,6 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-
         <Form.Item
           name="witness_2_identity_card_url"
           label={<CusttomInputLabel>Fotokopi KTP Saksi 2</CusttomInputLabel>}
@@ -92,9 +88,6 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-      </div>
-
-      <div className="w-full basis-1/2 gap-4">
         <Form.Item
           name="sptjm_url"
           label={
@@ -104,18 +97,19 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           }
           rules={[{ required: true, message: 'SPTJM diperlukan!' }]}
         >
-          <CloudUpload name="sptjm_url" form={form} multipleFile={false} />
-          <div className="mt-4 flex items-start justify-between">
-            <p className="mt-2 text-xs font-semibold">
-              SPTJM Kebenaran Kematian
-            </p>
-            <DownloadButton
-              downloadUrl="https://utfs.io/f/afc02a25-e3c0-4a2c-af70-85ec62db79c6-vc9lgq.pdf"
-              fileName="SPTJM Kebenaran Kematian"
-            />
+          <div className="grid grid-cols-[1fr_auto] items-center gap-2">
+            <CloudUpload name="sptjm_url" form={form} multipleFile={false} />
+            <div className="flex items-center">
+              <p className="mr-4 text-xs font-semibold">
+                SPTJM Kebenaran Kematian
+              </p>
+              <DownloadButton
+                downloadUrl="https://utfs.io/f/afc02a25-e3c0-4a2c-af70-85ec62db79c6-vc9lgq.pdf"
+                fileName="SPTJM Kebenaran Kematian"
+              />
+            </div>
           </div>
         </Form.Item>
-
         <Form.Item
           name="statement_letter_of_true_death_data_url"
           label={
@@ -130,19 +124,21 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             },
           ]}
         >
-          <CloudUpload
-            name="statement_letter_of_true_death_data_url"
-            form={form}
-            multipleFile={false}
-          />
-          <div className="mt-4 flex items-start justify-between">
-            <p className="mt-2 text-xs font-semibold">
-              Surat Pernyataan Data Benar Kematian
-            </p>
-            <DownloadButton
-              downloadUrl="https://utfs.io/f/a14d50ca-642c-42bb-90ab-bec29a6fdaef-dsevay.docx.pdf"
-              fileName="Surat Pernyataan Data Benar Kematian"
+          <div className="grid grid-cols-[1fr_auto] items-center gap-2">
+            <CloudUpload
+              name="statement_letter_of_true_death_data_url"
+              form={form}
+              multipleFile={false}
             />
+            <div className="flex items-center">
+              <p className="mr-4 text-xs font-semibold">
+                Surat Pernyataan Data Benar Kematian
+              </p>
+              <DownloadButton
+                downloadUrl="https://utfs.io/f/a14d50ca-642c-42bb-90ab-bec29a6fdaef-dsevay.docx.pdf"
+                fileName="Surat Pernyataan Data Benar Kematian"
+              />
+            </div>
           </div>
         </Form.Item>
       </div>
