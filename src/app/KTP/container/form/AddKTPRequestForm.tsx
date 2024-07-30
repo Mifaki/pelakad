@@ -30,50 +30,63 @@ const AddKTPRequestForm = ({
       className="p-4"
     >
       <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-        <div className="w-full basis-1/2">
-          <Form.Item
-            name="phone_number"
-            label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
-            rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
-          >
-            <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
-          </Form.Item>
-          <Form.Item
-            name="full_name"
-            label={<CusttomInputLabel>Nama Lengkap</CusttomInputLabel>}
-            rules={[{ required: true, message: 'Nama Lengkap diperlukan!' }]}
-          >
-            <Input
-              className="rounded-xl border-2"
-              placeholder="Masukkan nama lengkap"
-            />
-          </Form.Item>
-        </div>
+        <div className="mx-5 mt-14 rounded-2xl border-2 border-white bg-[#B6CEEE] px-5 pt-4">
+          <h2 className={`my text-center text-heading-5 font-semibold`}>
+            Pengajuan KTP
+          </h2>
+          <h3 className={`my pt-3 text-center text-heading-6 font-semibold`}>
+            Data Pemohon
+          </h3>
+          <div className="w-full basis-1/2">
+            <Form.Item
+              name="phone_number"
+              label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
+              rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
+            >
+              <Input
+                className="rounded-xl border-2"
+                placeholder="08xxxxxxxxxx"
+              />
+            </Form.Item>
+            <Form.Item
+              name="full_name"
+              label={<CusttomInputLabel>Nama Lengkap</CusttomInputLabel>}
+              rules={[{ required: true, message: 'Nama Lengkap diperlukan!' }]}
+            >
+              <Input
+                className="rounded-xl border-2"
+                placeholder="Masukkan nama lengkap"
+              />
+            </Form.Item>
+          </div>
 
-        <div className="w-full basis-1/2 gap-4">
-          <Form.Item
-            name="nik_id"
-            label={
-              <CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>
-            }
-            rules={[{ required: true, message: 'NIK diperlukan!' }]}
-          >
-            <Input
-              className="rounded-xl border-2"
-              placeholder="3522xxxxxxxxxxxx"
-            />
-          </Form.Item>
+          <div className="w-full basis-1/2 gap-4">
+            <Form.Item
+              name="nik_id"
+              label={
+                <CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>
+              }
+              rules={[{ required: true, message: 'NIK diperlukan!' }]}
+            >
+              <Input
+                className="rounded-xl border-2"
+                placeholder="3522xxxxxxxxxxxx"
+              />
+            </Form.Item>
 
-          <Form.Item
-            name="kk_id"
-            label={<CusttomInputLabel>Nomor Kartu Keluarga</CusttomInputLabel>}
-            rules={[{ required: true, message: 'NKK diperlukan!' }]}
-          >
-            <Input
-              className="rounded-xl border-2"
-              placeholder="3522xxxxxxxxxxxx"
-            />
-          </Form.Item>
+            <Form.Item
+              name="kk_id"
+              label={
+                <CusttomInputLabel>Nomor Kartu Keluarga</CusttomInputLabel>
+              }
+              rules={[{ required: true, message: 'NKK diperlukan!' }]}
+            >
+              <Input
+                className="rounded-xl border-2"
+                placeholder="3522xxxxxxxxxxxx"
+              />
+            </Form.Item>
+          </div>
         </div>
       </div>
 

@@ -84,7 +84,7 @@ const KKAplicantData: React.FC = () => {
         </Button>
       </Upload>
 
-      <p className="text-black-500 mt-2 text-xs">
+      <p className="text-black-500 mt-2 text-sm">
         *Surat perubahan data wajib di sertakan Jika melakukan Perubahan data
         pada KK
       </p>
@@ -93,7 +93,7 @@ const KKAplicantData: React.FC = () => {
 
   return (
     <section className="container overflow-hidden bg-pd-primary">
-      <div className="mt-2 rounded-2xl border-2 border-white bg-[#B6CEEE] px-2 pt-2">
+      <div className="mx-5 mt-8 rounded-2xl border-2 border-white bg-[#B6CEEE] px-5 pt-4">
         <h2
           className={`my text-center text-heading-5 font-semibold ${poppins.className}`}
         >
@@ -121,10 +121,6 @@ const KKAplicantData: React.FC = () => {
                 className="rounded-xl border-2"
                 placeholder="08xxxxxxxxxx"
               />
-              <p className="text-black-500 mt-2 text-xs">
-                *Nomor yang akan digunakan untuk mengirimkan notifikasi
-                pengambilan
-              </p>
             </Form.Item>
 
             <Form.Item
@@ -147,9 +143,6 @@ const KKAplicantData: React.FC = () => {
                 className="rounded-xl border-2"
                 placeholder="3522xxxxxxxxxxxx"
               />
-              <p className="text-black-500 mt-2 text-xs">
-                *Ketik (-) jika tidak ada
-              </p>
             </Form.Item>
 
             <Form.Item
@@ -186,7 +179,7 @@ const KKAplicantData: React.FC = () => {
           </Form>
         </div>
       </div>
-      <div className="mb-2 mt-2 flex justify-center"></div>
+      <div className="mb-5 mt-5 flex justify-center"></div>
     </section>
   );
 };

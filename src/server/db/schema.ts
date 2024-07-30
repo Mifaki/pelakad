@@ -19,7 +19,7 @@ export const requestStatusEnum = pgEnum('request_status', [
   'tanda-tangan',
 ]);
 
-// Schema
+// Table
 export const ktpRequest = createTable('ktp_request', {
   id: uuid('id')
     .primaryKey()
@@ -60,10 +60,61 @@ export const birthCertificateRequest = createTable(
     out_of_wedlock_letter_url: varchar('out_of_wedlock_image_url', {
       length: 256,
     }),
-    request_status: requestStatusEnum('request_status').notNull(),
     marriage_certificate_url: varchar('marriage_certificate_url', {
       length: 256,
     }).notNull(),
+    request_status: requestStatusEnum('request_status').notNull(),
+    feedback: text('feedback'),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).$onUpdate(
+      () => new Date(),
+    ),
+  },
+);
+
+export const deathCertificateRequest = createTable(
+  'death_certificate_request',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID())
+      .notNull(),
+    full_name: varchar('full_name', {
+      length: 256,
+    }).notNull(),
+    phone_number: varchar('phone_number', {
+      length: 256,
+    }).notNull(),
+    nik_id: varchar('nik_id', {
+      length: 256,
+    }).notNull(),
+    kk_id: varchar('kk_id', {
+      length: 256,
+    }).notNull(),
+    family_card_image: varchar('family_card_image', {
+      length: 256,
+    }).notNull(),
+    reporter_identity_card_url: varchar('reporter_identity_card_url', {
+      length: 256,
+    }).notNull(),
+    deceased_identity_card_url: varchar('deceased_identity_card_url', {
+      length: 256,
+    }).notNull(),
+    death_certificate_url: varchar('death_certificate_url', {
+      length: 256,
+    }).notNull(),
+    sptjm_url: varchar('sptjm_url', {
+      length: 256,
+    }).notNull(),
+    statement_letter_of_true_death_data_url: varchar(
+      'statement_letter_of_true_death_data_url',
+      {
+        length: 256,
+      },
+    ).notNull(),
+    request_status: requestStatusEnum('request_status').notNull(),
     feedback: text('feedback'),
     createdAt: timestamp('created_at', { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -107,7 +158,7 @@ export const marriageBookImages = createTable('marriage_book_images', {
 });
 
 export const witnessIdentityCardImages = createTable(
-  'witness_identity_card_images',
+  'witness_identity_card_image',
   {
     id: uuid('id')
       .primaryKey()

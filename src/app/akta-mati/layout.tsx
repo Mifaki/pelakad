@@ -1,15 +1,14 @@
 import Footer from '~/shared/container/Footer/Footer';
 import TopNavbar from '~/shared/container/navigation/TopNavbar';
-import KKContainer from './container/KkContainer';
 
-const LandingContainer = () => {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
+    <main>
       <TopNavbar />
-      <KKContainer />
+      {children}
       <Footer />
-    </>
+    </main>
   );
-};
-
-export default LandingContainer;
+}
