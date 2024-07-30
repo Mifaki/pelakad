@@ -17,7 +17,11 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           label={<CusttomInputLabel>Kartu Keluarga</CusttomInputLabel>}
           rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
         >
-          <CloudUpload name="family_card_image" form={form} />
+          <CloudUpload
+            name="family_card_image"
+            form={form}
+            multipleFile={false}
+          />
         </Form.Item>
         <Form.Item
           name="reporter_identity_card_url"
@@ -39,7 +43,7 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           rules={[{ required: true, message: 'KTP Almarhum diperlukan!' }]}
         >
           <CloudUpload
-            name="deceased's_identity_card_url"
+            name="deceased_identity_card_url"
             form={form}
             multipleFile={false}
           />
@@ -71,7 +75,7 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           rules={[{ required: true, message: 'KTP saksi 1 diperlukan!' }]}
         >
           <CloudUpload
-            name="witness_identity_card_url"
+            name="witness_1_identity_card_url"
             form={form}
             multipleFile={false}
           />
@@ -83,7 +87,7 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           rules={[{ required: true, message: 'KTP saksi 2 diperlukan!' }]}
         >
           <CloudUpload
-            name="witness_identity_card_url"
+            name="witness_2_identity_card_url"
             form={form}
             multipleFile={false}
           />
@@ -129,6 +133,7 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           <CloudUpload
             name="statement_letter_of_true_death_data_url"
             form={form}
+            multipleFile={false}
           />
           <div className="mt-4 flex items-start justify-between">
             <p className="mt-2 text-xs font-semibold">
