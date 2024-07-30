@@ -2,8 +2,16 @@
 
 import { db } from '~/server/db';
 import { eq } from 'drizzle-orm';
-import { type IPayloadKTP, type IRootKTP } from '../models/ktpinterfaces';
-import { ktpRequest, requestStatusEnum } from '~/server/db/schema';
+import {
+  type IPayloadKTP,
+  type IRootKTP,
+  type IKTPRelatedImages,
+} from '../models/ktpinterfaces';
+import {
+  ktpRequest,
+  requestStatusEnum,
+  marriageBookImages,
+} from '~/server/db/schema';
 import { type IGeneralAPIResponse } from '../models/generalInterfaces';
 
 export async function getAllKTPRequest(): Promise<
@@ -16,8 +24,23 @@ export async function getAllKTPRequest(): Promise<
   };
 
   try {
-    const ktpRequest = (await db.query.ktpRequest.findMany()) as IRootKTP[];
-    result.data = ktpRequest;
+    const ktprequests = await db.select().from(ktpRequest);
+
+    const requestsWithImages = await Promise.all(
+      ktprequests.map(async (request) => {
+        const marriageBookImgs = await db
+          .select()
+          .from(marriageBookImages)
+          .where(eq(marriageBookImages.request_id, request.id));
+
+        return {
+          ...request,
+          marriage_book_url: marriageBookImgs.map((img) => img.image_url),
+        } as IRootKTP;
+      }),
+    );
+
+    result.data = requestsWithImages;
   } catch (error) {
     result.error =
       error instanceof Error ? error : new Error('An unknown error occurred');
@@ -38,15 +61,24 @@ export async function getKTPRequestById(
   };
 
   try {
-    const request = (await db.query.ktpRequest.findFirst({
-      where: eq(ktpRequest.id, id),
-    })) as IRootKTP | undefined;
+    const [request] = await db
+      .select()
+      .from(ktpRequest)
+      .where(eq(ktpRequest.id, id));
 
-    if (request) {
-      result.data = request;
-    } else {
+    if (!request) {
       throw new Error('KTP request not found');
     }
+
+    const marriageBookImgs = await db
+      .select()
+      .from(marriageBookImages)
+      .where(eq(marriageBookImages.request_id, request.id));
+
+    result.data = {
+      ...request,
+      marriage_book_url: marriageBookImgs.map((img) => img.image_url),
+    } as IRootKTP;
   } catch (error) {
     result.error =
       error instanceof Error ? error : new Error('An unknown error occurred');
