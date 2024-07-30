@@ -26,11 +26,16 @@ export async function submitKTPRequest(
     data !== null &&
     'id' in data &&
     'full_name' in data &&
-    'phone_number' in data &&
+    'contact' in data &&
     'nik_id' in data &&
     'kk_id' in data &&
     'reason' in data &&
-    'request_status' in data
+    'request_status' in data &&
+    'family_card_url' in data &&
+    'birth_certificate_url' in data &&
+    'foreign_move_cert_url' in data &&
+    'damaged_ktp_url' in data &&
+    'police_report_url' in data
   ) {
     return data as IRootKTP;
   } else {

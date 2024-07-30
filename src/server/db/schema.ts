@@ -25,13 +25,20 @@ export const ktpRequest = createTable('ktp_request', {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID())
     .notNull(),
+  contact: varchar('contact', { length: 256 }).notNull(),
   full_name: varchar('full_name', { length: 256 }).notNull(),
-  phone_number: varchar('phone_number', { length: 256 }).notNull(),
   nik_id: varchar('nik_id', { length: 256 }).notNull(),
   kk_id: varchar('kk_id', { length: 256 }).notNull(),
-  reason: text('reason').notNull(),
-  request_status: requestStatusEnum('request_status').notNull(),
+  reason: varchar('reason', { length: 50 }).notNull(),
+  request_status: varchar('request_status', { length: 50 }).notNull(),
   feedback: text('feedback'),
+  family_card_url: varchar('family_card_url', { length: 256 }).notNull(),
+  birth_certificate_url: varchar('birth_certificate_url', {
+    length: 256,
+  }).notNull(),
+  foreign_move_cert_url: varchar('foreign_move_cert_url', { length: 256 }),
+  damaged_ktp_url: varchar('damaged_ktp_url', { length: 256 }),
+  police_report_url: varchar('police_report_url', { length: 256 }),
   createdAt: timestamp('created_at', { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -262,6 +269,14 @@ export const birthCertificateRequestRelations = relations(
   }),
 );
 
+//KTP
+export const ktpRequestRelations = relations(
+  birthCertificateRequest,
+  ({ many }) => ({
+    marriageBookImages: many(marriageBookImages),
+  }),
+);
+
 export const familyCardImagesRelations = relations(
   familyCardImages,
   ({ one }) => ({
@@ -272,7 +287,7 @@ export const familyCardImagesRelations = relations(
   }),
 );
 
-export const marriageBookImagesRelations = relations(
+export const marriageBookImagesRelationsBirthCertificate = relations(
   marriageBookImages,
   ({ one }) => ({
     request: one(birthCertificateRequest, {

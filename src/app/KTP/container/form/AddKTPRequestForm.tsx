@@ -11,14 +11,14 @@ import { type IPayloadKTP } from '~/shared/models/ktpinterfaces';
 
 type IAddKTPRequestForm = {
   form: FormInstance<IPayloadKTP>;
-  readioValue: TRequestReason;
+  radioValue: TRequestReason;
   handleRadioChange: (e: RadioChangeEvent) => void;
   handleMutate: (values: IPayloadKTP) => Promise<void>;
 };
 
 const AddKTPRequestForm = ({
   form,
-  readioValue,
+  radioValue,
   handleRadioChange,
   handleMutate,
 }: IAddKTPRequestForm) => {
@@ -87,11 +87,10 @@ const AddKTPRequestForm = ({
           },
         ]}
       >
-        <Radio.Group onChange={handleRadioChange} value={readioValue}>
+        <Radio.Group onChange={handleRadioChange} value={radioValue}>
           <Radio value="baru">Baru</Radio>
           <Radio value="pindah datang">Pindah Datang</Radio>
-          <Radio value="hilang">Hilang</Radio>
-          <Radio value="rusak">Rusak</Radio>
+          <Radio value="hilang">Hilang/Rusak</Radio>
         </Radio.Group>
       </Form.Item>
     </Form>

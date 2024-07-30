@@ -8,11 +8,13 @@ export const useKTPRequestDetail = (data: IRootKTP | null) => {
     form.setFieldsValue({
       id: data.id,
       full_name: data.full_name,
-      phone_number: data.phone_number,
+      contact: data.contact,
       nik_id: data.nik_id,
       kk_id: data.kk_id,
       reason: data.reason,
       request_status: data.request_status,
+      family_card_url: data.family_card_url,
+      birth_certificate_url: data.birth_certificate_url,
     });
   }
 
