@@ -1,129 +1,125 @@
 'use client';
-import { type IStep } from '~/shared/models/generalInterfaces';
+
 import React, { useState } from 'react';
-import { Button, message, type RadioChangeEvent } from 'antd';
+import { Form, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { type TRequestReason } from '~/shared/models/generalInterfaces';
+import { useRouter } from 'next/navigation';
+import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
+import { type IStep } from '~/shared/models/generalInterfaces';
+import CustomStepperButton from '~/shared/container/custom-steps/CustomStepperButton';
 import { type IPayloadKTP } from '~/shared/models/ktpinterfaces';
 import { submitKTPRequest } from '~/shared/actions/repositories/KTPService';
-import CustomSteps from '~/shared/container/custom-steps/CustomSteps';
-import CustomStepperButton from '~/shared/container/custom-steps/CustomStepperButton';
 import AddKTPRequestForm from './form/AddKTPRequestForm';
 import NewKTPForm from './form/NewKTPForm';
-import KKAplicantData from '~/app/KK/container/Form/KKAplicantData';
 import MoveInKTPForm from './form/MoveInKTPForm';
 import LostKTPForm from './form/LostKTPForm';
+import useEnsureArray from '~/shared/usecase/useEnsureArray';
 
-const KtpContainer: React.FC = () => {
-  const [form] = useForm();
-  const [radioValue, setRadioValue] = useState<TRequestReason>('baru');
-  const [isLoading, setIsLoading] = useState(false);
+type FormData = IPayloadKTP;
+
+const KtpContainer = () => {
+  const [form] = useForm<FormData>();
+  const router = useRouter();
+  const ensureArray = useEnsureArray;
+
   const [current, setCurrent] = useState(0);
+  const [selectedReason, setSelectedReason] = useState<string>('baru');
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>();
 
-  const onRadioChange = (e: RadioChangeEvent) => {
-    setRadioValue(e.target.value as TRequestReason);
-    setCurrent(0); // Reset to first step when changing request type
+  const handleRadioChange = (value: string) => {
+    setSelectedReason(value);
   };
 
-  const handleMutate = async (values: IPayloadKTP) => {
-    setIsLoading(true);
-    try {
-      await submitKTPRequest(values);
-      message.success('Permohonan KTP berhasil diajukan');
-      form.resetFields();
-      setCurrent(0);
-    } catch (error) {
-      message.error('Gagal mengajukan permohonan KTP, silahkan coba kembali');
-    } finally {
-      setIsLoading(false);
+  const renderContent = () => {
+    if (current === 0) {
+      return (
+        <AddKTPRequestForm handleRadioChange={handleRadioChange} form={form} />
+      );
+    }
+    switch (selectedReason) {
+      case 'baru':
+        return <NewKTPForm form={form} />;
+      case 'pindah_datang':
+        return <MoveInKTPForm form={form} />;
+      case 'hilang':
+        return <LostKTPForm form={form} />;
+      default:
+        return null;
     }
   };
 
-  const getSteps = () => {
-    const commonSteps = [
-      {
-        title: 'Data Pemohon',
-        content: (
-          <AddKTPRequestForm
-            form={form}
-            handleRadioChange={onRadioChange}
-            radioValue={radioValue}
-            handleMutate={handleMutate}
-          />
-        ),
-      },
-    ];
+  const steps: IStep[] = [
+    {
+      title: 'Pengajuan KTP',
+      subTitle: 'Data Pemohon',
+      content: renderContent(),
+    },
+    {
+      title: 'Pengajuan KTP',
+      subTitle: 'Data Lanjutan',
+      content: renderContent(),
+    },
+  ];
 
-    const specificStep = {
-      baru: {
-        title: 'KTP Baru',
-        content: (
-          <NewKTPForm
-            form={form}
-            handleRadioChange={onRadioChange}
-            radioValue={radioValue}
-            handleMutate={handleMutate}
-          />
-        ),
-      },
-      'pindah datang': {
-        title: 'Pindah Datang',
-        content: (
-          <MoveInKTPForm
-            form={form}
-            handleRadioChange={onRadioChange}
-            radioValue={radioValue}
-            handleMutate={handleMutate}
-          />
-        ),
-      },
-      hilang: {
-        title: 'KTP Hilang/Rusak',
-        content: (
-          <LostKTPForm
-            form={form}
-            handleRadioChange={onRadioChange}
-            radioValue={radioValue}
-            handleMutate={handleMutate}
-          />
-        ),
-      },
-      rusak: {
-        title: 'KTP Rusak',
-        content: (
-          <NewKTPForm
-            form={form}
-            handleRadioChange={onRadioChange}
-            radioValue={radioValue}
-            handleMutate={handleMutate}
-          />
-        ),
-      },
-    };
-
-    return [...commonSteps, specificStep[radioValue]];
-  };
-
-  const steps = getSteps();
-
-  const next = () => {
-    setCurrent(current + 1);
+  const next = async () => {
+    try {
+      const values = await form.validateFields();
+      setFormData((prevData) => ({ ...prevData, ...values }));
+      setCurrent(current + 1);
+    } catch (error) {
+      console.error('Validation failed:', error);
+    }
   };
 
   const prev = () => {
     setCurrent(current - 1);
   };
 
+  const handleMutate = async () => {
+    try {
+      setIsLoading(true);
+      const currentStepValues = await form.validateFields();
+      const allFormData: FormData = { ...formData, ...currentStepValues };
+
+      const payload: IPayloadKTP = {
+        full_name: allFormData.full_name ?? '',
+        contact: allFormData.contact ?? '',
+        nik_id: allFormData.nik_id ?? '',
+        kk_id: allFormData.kk_id ?? '',
+        reason: allFormData.reason ?? '',
+        family_card_url: allFormData.family_card_url ?? '',
+        birth_certificate_url: allFormData.birth_certificate_url ?? '',
+        marriage_book_url: ensureArray(allFormData.marriage_book_url),
+        foreign_move_cert_url: allFormData.foreign_move_cert_url ?? '',
+        damaged_ktp_url: allFormData.damaged_ktp_url ?? '',
+        police_report_url: allFormData.police_report_url ?? '',
+      };
+
+      await submitKTPRequest(payload);
+      message.success('Permohonan KTP berhasil diajukan');
+      form.resetFields();
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+      message.error('Gagal mengajukan permohonan KTP, silahkan coba kembali');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="max-w[100vw] container min-h-screen w-full bg-pd-primary py-14">
+    <div className="container min-h-screen w-full max-w-[100vw] bg-pd-primary py-14">
       <div className="mb-6 rounded-2xl border-2 border-white bg-[#B6CEEE] px-5 py-4">
-        <h2 className="mb-3 text-center text-heading-5 font-semibold">
-          Pengajuan KTP
+        <h2 className="mb-2 text-center text-heading-5 font-semibold">
+          {steps[current]?.title}
         </h2>
         <h3 className="mb-4 text-center text-heading-6 font-semibold">
-          Kartu Tanda Penduduk
+          {steps[current]?.subTitle}
         </h3>
-        <CustomSteps steps={steps} current={current} />
+        <Form form={form} layout="vertical" onFinish={handleMutate}>
+          <CustomSteps steps={steps} current={current} />
+        </Form>
       </div>
       <CustomStepperButton
         form={form}
@@ -131,7 +127,7 @@ const KtpContainer: React.FC = () => {
         stepsLength={steps.length}
         onNext={next}
         onPrev={prev}
-        onComplete={form.submit}
+        onComplete={handleMutate}
         mutateLoading={isLoading}
       />
     </div>

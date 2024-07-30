@@ -2,11 +2,7 @@
 
 import { db } from '~/server/db';
 import { eq } from 'drizzle-orm';
-import {
-  type IPayloadKTP,
-  type IRootKTP,
-  type IKTPRelatedImages,
-} from '../models/ktpinterfaces';
+import { type IPayloadKTP, type IRootKTP } from '../models/ktpinterfaces';
 import {
   ktpRequest,
   requestStatusEnum,
@@ -111,7 +107,7 @@ export async function updateKTPRequest(
       .returning();
 
     if (updatedRequest) {
-      result.data = updatedRequest as IRootKTP;
+      result.data = updatedRequest as unknown as IRootKTP;
     } else {
       throw new Error('KTP request not found');
     }
@@ -146,7 +142,7 @@ export async function declineKTPRequest(
       .returning();
 
     if (updatedRequest) {
-      result.data = updatedRequest as IRootKTP;
+      result.data = updatedRequest as unknown as IRootKTP;
     } else {
       throw new Error('KTP request not found');
     }
@@ -171,7 +167,16 @@ export async function addKTPRequest(
 
   try {
     const newRequest = {
-      ...payload,
+      full_name: payload.full_name,
+      contact: payload.contact,
+      nik_id: payload.nik_id,
+      kk_id: payload.kk_id,
+      reason: payload.reason,
+      family_card_url: payload.family_card_url[0] ?? '',
+      birth_certificate_url: payload.birth_certificate_url[0] ?? '',
+      foreign_move_cert_url: payload.foreign_move_cert_url[0] ?? '',
+      damaged_ktp_url: payload.damaged_ktp_url[0] ?? '',
+      police_report_url: payload.police_report_url[0] ?? '',
       request_status: requestStatusEnum.enumValues[0] as 'menunggu',
     };
 
@@ -181,7 +186,16 @@ export async function addKTPRequest(
       .returning();
 
     if (createdRequest) {
-      result.data = createdRequest as IRootKTP;
+      if (payload.marriage_book_url && payload.marriage_book_url.length > 0) {
+        await db.insert(marriageBookImages).values(
+          payload.marriage_book_url.map((url: string) => ({
+            name: `${payload.full_name}-family-card-request`,
+            image_url: url,
+            request_id: createdRequest.id,
+          })),
+        );
+      }
+      result.data = createdRequest as unknown as IRootKTP;
     } else {
       throw new Error('Failed to create KTP request');
     }
