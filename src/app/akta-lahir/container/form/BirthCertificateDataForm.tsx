@@ -10,8 +10,8 @@ type IBirthCertificateDataForm = {
 
 const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
   return (
-    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-      <div className="w-full basis-1/2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex flex-col gap-4">
         <Form.Item
           name="family_card_image"
           label={
@@ -36,9 +36,6 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             *Opsional jika belum menikah
           </p>
         </Form.Item>
-      </div>
-
-      <div className="w-full basis-1/2 gap-4">
         <Form.Item
           name="mother_identity_card_url"
           label={<CusttomInputLabel>KTP Ibu</CusttomInputLabel>}
@@ -50,7 +47,6 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-
         <Form.Item
           name="witness_1_identity_card_url"
           label={<CusttomInputLabel>KTP Saksi 1</CusttomInputLabel>}
@@ -62,8 +58,7 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
-      </div>
-      <div className="w-full basis-1/2">
+
         <Form.Item
           name="witness_2_identity_card_url"
           label={<CusttomInputLabel>KTP Saksi 2</CusttomInputLabel>}
@@ -75,6 +70,9 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             multipleFile={false}
           />
         </Form.Item>
+      </div>
+
+      <div className="flex flex-col gap-4">
         <Form.Item
           name="marriage_certificate_url"
           label={
@@ -96,8 +94,8 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             *Unggah Surat Kebenaran Kelahiran jika Surat Keterangan Kelahiran
             dari rumah sakit Tidak ada
           </p>
-          <div className="mt-4 flex items-start justify-between">
-            <p className="mt-2 text-xs font-semibold">
+          <div className="flex items-center">
+            <p className="mr-4 mt-2 text-xs font-semibold">
               SPTJM Kebenaran Kelahiran
             </p>
             <DownloadButton
@@ -106,9 +104,7 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             />
           </div>
         </Form.Item>
-      </div>
 
-      <div className="w-full basis-1/2 gap-4">
         <Form.Item
           name="marriage_book_url"
           label={
@@ -125,12 +121,13 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
           ]}
         >
           <CloudUpload name="marriage_book_url" form={form} />
+
           <p className="mt-2 text-xs font-medium">
             *Unggah SPTJM Kebenaran suami Istri jika tidak memiliki Buku Nikah
             Legalisir KUA (Opsional jika belum menikah)
           </p>
-          <div className="mt-4 flex items-start justify-between">
-            <p className="mt-2 text-xs font-semibold">
+          <div className="flex items-center">
+            <p className="mr-4 mt-2 text-xs font-semibold">
               Surat Kebenaran Suami Istri
             </p>
             <DownloadButton
@@ -161,8 +158,8 @@ const BirthCertificateDataForm = ({ form }: IBirthCertificateDataForm) => {
             *Surat pernyataan luar nikah disertakan bayi yang lahir diluar
             pernikahan/tanggal pernikahan orangtua sesudah kelahiran bayi.
           </p>
-          <div className="mt-4 flex items-start justify-between">
-            <p className="mt-2 text-xs font-semibold">
+          <div className="flex items-center">
+            <p className="mr-4 mt-2 text-xs font-semibold">
               Surat Pernyataan Luar Nikah
             </p>
             <DownloadButton
