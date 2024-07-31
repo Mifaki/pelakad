@@ -12,8 +12,8 @@ import CloudUpload from '~/shared/container/cloud-upload/CloudUpload';
 
 const NewKTPForm = ({ form }: { form: FormInstance<any> }) => {
   return (
-    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-      <div className="w-full basis-1/2">
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Form.Item
           name="birth_certificate_url"
           label={
@@ -56,7 +56,7 @@ const NewKTPForm = ({ form }: { form: FormInstance<any> }) => {
           <CloudUpload name="marriage_book_url" form={form} />
         </Form.Item>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -73,23 +73,26 @@ const LostKTPForm = ({ form }: { form: FormInstance<any> }) => {
   );
 
   return (
-    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-      <div className="w-full basis-1/2">
-        <Form.Item
-          name="alasanPengajuan"
-          label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
-          rules={[
-            {
-              required: true,
-              message: 'Pilih salah satu alasan pengajuan!',
-            },
-          ]}
-        >
-          <Radio.Group onChange={onRadioChange} value={radioValue}>
-            <Radio value="hilang">Hilang</Radio>
-            <Radio value="rusak">Rusak</Radio>
-          </Radio.Group>
-        </Form.Item>
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="mb-4">
+          {' '}
+          <Form.Item
+            name="alasanPengajuan"
+            label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
+            rules={[
+              {
+                required: true,
+                message: 'Pilih salah satu alasan pengajuan!',
+              },
+            ]}
+          >
+            <Radio.Group onChange={onRadioChange} value={radioValue}>
+              <Radio value="hilang">Hilang</Radio>
+              <Radio value="rusak">Rusak</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </div>
 
         <Form.Item
           name="birth_certificate_url"
@@ -103,17 +106,19 @@ const LostKTPForm = ({ form }: { form: FormInstance<any> }) => {
           <CloudUpload name="birth_certificate_url" form={form} />
         </Form.Item>
 
-        <Form.Item
-          name="family_card_url"
-          label={
-            <CusttomInputLabel>
-              Kartu Keluarga<span className="text-gray-600"></span>
-            </CusttomInputLabel>
-          }
-          rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
-        >
-          <CloudUpload name="family_card_url" form={form} />
-        </Form.Item>
+        <div className="mb-4">
+          <Form.Item
+            name="family_card_url"
+            label={
+              <CusttomInputLabel>
+                Kartu Keluarga<span className="text-gray-600"></span>
+              </CusttomInputLabel>
+            }
+            rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
+          >
+            <CloudUpload name="family_card_url" form={form} />
+          </Form.Item>
+        </div>
 
         <Form.Item
           name="marriage_book_url"
@@ -132,13 +137,13 @@ const LostKTPForm = ({ form }: { form: FormInstance<any> }) => {
         >
           <CloudUpload name="marriage_book_url" form={form} />
         </Form.Item>
-
-        <Form.Item>
-          {showAdditionalOptionsLost && <AdditionalOptionsLost />}
-          {showAdditionalOptionsBroken && <AdditionalOptionsBroken />}
-        </Form.Item>
       </div>
-    </div>
+
+      <Form.Item>
+        {showAdditionalOptionsLost && <AdditionalOptionsLost />}
+        {showAdditionalOptionsBroken && <AdditionalOptionsBroken />}
+      </Form.Item>
+    </>
   );
 };
 
