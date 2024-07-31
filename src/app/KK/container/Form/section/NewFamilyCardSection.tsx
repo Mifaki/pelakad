@@ -1,30 +1,35 @@
+import React from 'react';
 import { Form, type FormInstance } from 'antd';
 import CloudUpload from '~/shared/container/cloud-upload/CloudUpload';
-import CusttomInputLabel from '~/shared/container/custom-input-label/CustomInputLabel';
+import CustomInputLabel from '~/shared/container/custom-input-label/CustomInputLabel';
 
 const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
   return (
-    <>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <Form.Item
         name="husband_family_card_url"
-        label={<CusttomInputLabel>Kartu Keluarga Laki-Laki</CusttomInputLabel>}
+        label={<CustomInputLabel>Kartu Keluarga Laki-Laki</CustomInputLabel>}
         rules={[
           { required: true, message: 'Kartu Keluarga Laki-Laki diperlukan!' },
         ]}
+        className="mb-4"
       >
-        <CloudUpload
-          name="husband_family_card_url"
-          form={form}
-          multipleFile={false}
-        />
+        <div className="w-full">
+          <CloudUpload
+            name="husband_family_card_url"
+            form={form}
+            multipleFile={false}
+          />
+        </div>
       </Form.Item>
 
       <Form.Item
         name="wife_family_card_url"
-        label={<CusttomInputLabel>Kartu Keluarga Wanita</CusttomInputLabel>}
+        label={<CustomInputLabel>Kartu Keluarga Wanita</CustomInputLabel>}
         rules={[
           { required: true, message: 'Kartu Keluarga Wanita diperlukan!' },
         ]}
+        className="mb-4"
       >
         <CloudUpload
           name="wife_family_card_url"
@@ -35,8 +40,9 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
 
       <Form.Item
         name="father_identity_card_url"
-        label={<CusttomInputLabel>KTP Ayah</CusttomInputLabel>}
+        label={<CustomInputLabel>KTP Ayah</CustomInputLabel>}
         rules={[{ required: true, message: 'KTP Ayah diperlukan!' }]}
+        className="mb-4"
       >
         <CloudUpload
           name="father_identity_card_url"
@@ -47,8 +53,9 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
 
       <Form.Item
         name="mother_identity_card_url"
-        label={<CusttomInputLabel>KTP Ibu</CusttomInputLabel>}
+        label={<CustomInputLabel>KTP Ibu</CustomInputLabel>}
         rules={[{ required: true, message: 'KTP Ibu diperlukan!' }]}
+        className="mb-4"
       >
         <CloudUpload
           name="mother_identity_card_url"
@@ -59,10 +66,11 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
 
       <Form.Item
         name="husband_birth_certificate_url"
-        label={<CusttomInputLabel>Akta Kelahiran Laki-Laki</CusttomInputLabel>}
+        label={<CustomInputLabel>Akta Kelahiran Laki-Laki</CustomInputLabel>}
         rules={[
           { required: true, message: 'Akta Kelahiran Laki-Laki diperlukan!' },
         ]}
+        className="mb-4"
       >
         <CloudUpload
           name="husband_birth_certificate_url"
@@ -77,10 +85,11 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
 
       <Form.Item
         name="wife_birth_certificate_url"
-        label={<CusttomInputLabel>Akta Kelahiran Wanita</CusttomInputLabel>}
+        label={<CustomInputLabel>Akta Kelahiran Wanita</CustomInputLabel>}
         rules={[
           { required: true, message: 'Akta Kelahiran Wanita diperlukan!' },
         ]}
+        className="mb-4"
       >
         <CloudUpload
           name="wife_birth_certificate_url"
@@ -96,9 +105,9 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
       <Form.Item
         name="marriage_book_url"
         label={
-          <CusttomInputLabel>
+          <CustomInputLabel>
             Buku nikah / kutipan akta perkawinan
-          </CusttomInputLabel>
+          </CustomInputLabel>
         }
         rules={[
           {
@@ -106,6 +115,7 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
             message: 'Buku nikah / kutipan akta perkawinan diperlukan!',
           },
         ]}
+        className="mb-4 md:col-span-2"
       >
         <CloudUpload name="marriage_book_url" form={form} />
         <p className="mt-2 text-xs font-medium">
@@ -113,7 +123,7 @@ const NewFamilyCardSection = ({ form }: { form: FormInstance<any> }) => {
           pada KK
         </p>
       </Form.Item>
-    </>
+    </div>
   );
 };
 
