@@ -28,6 +28,12 @@ const useGenerateBreadcrumbItems = (): ItemType[] => {
       case 'kk':
         title = 'Kartu Keluarga';
         break;
+      case 'akta-mati':
+        title = 'Akta Kematian';
+        break;
+      case 'akta-lahir':
+        title = 'Akta Kelahiran';
+        break;
       case 'dashboard':
         return;
     }

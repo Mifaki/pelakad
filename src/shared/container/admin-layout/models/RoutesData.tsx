@@ -36,7 +36,7 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
   {
     label: (
       <div className="text-ny-gray-300 text-caption-1 font-[400]">
-        Akte Kelahiran
+        Akta Kelahiran
       </div>
     ),
     key: '/dashboard/akta-lahir',
@@ -48,7 +48,7 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
   {
     label: (
       <div className="text-ny-gray-300 text-caption-1 font-[400]">
-        Akte kematian
+        Akta kematian
       </div>
     ),
     key: '/dashboard/akta-mati',
