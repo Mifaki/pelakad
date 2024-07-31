@@ -29,57 +29,63 @@ const KKAplicantData = ({
 
   return (
     <>
-      <div className="mb-4">
-        <Form.Item
-          name="phone_number"
-          label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
-          rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
-          className="!mb-2"
-        >
-          <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
-        </Form.Item>
-        <p className="text-xs font-medium">
-          *Nomor yang akan digunakan untuk mengirimkan notifikasi pengambilan
-        </p>
-      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="mb-4">
+          <Form.Item
+            name="phone_number"
+            label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
+            rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
+            className="!mb-2"
+          >
+            <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
+          </Form.Item>
+          <p className="text-xs font-medium">
+            *Nomor yang akan digunakan untuk mengirimkan notifikasi pengambilan
+          </p>
+        </div>
 
-      <Form.Item
-        name="full_name"
-        label={<CusttomInputLabel>Nama Lengkap</CusttomInputLabel>}
-        rules={[{ required: true, message: 'Nama Lengkap diperlukan!' }]}
-      >
-        <Input
-          className="rounded-xl border-2"
-          placeholder="Masukkan nama lengkap"
-        />
-      </Form.Item>
-
-      <div className="mb-4">
         <Form.Item
-          name="nik_id"
-          label={<CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>}
-          rules={[
-            { required: true, message: 'No. Induk Kependudukan diperlukan!' },
-          ]}
-          className="!mb-2"
+          name="full_name"
+          label={<CusttomInputLabel>Nama Lengkap</CusttomInputLabel>}
+          rules={[{ required: true, message: 'Nama Lengkap diperlukan!' }]}
         >
           <Input
-            name="nikd_id"
             className="rounded-xl border-2"
-            placeholder="3522xxxxxxxxxxxxxx"
+            placeholder="Masukkan nama lengkap"
           />
         </Form.Item>
-        <p className="text-xs font-medium">*Ketik (-) jika tidak ada</p>
+
+        <div className="mb-4">
+          <Form.Item
+            name="nik_id"
+            label={
+              <CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>
+            }
+            rules={[
+              { required: true, message: 'No. Induk Kependudukan diperlukan!' },
+            ]}
+            className="!mb-2"
+          >
+            <Input
+              name="nikd_id"
+              className="rounded-xl border-2"
+              placeholder="3522xxxxxxxxxxxxxx"
+            />
+          </Form.Item>
+          <p className="text-xs font-medium">*Ketik (-) jika tidak ada</p>
+        </div>
+
+        <Form.Item
+          name="kk_id"
+          label={<CusttomInputLabel>Nomor Kartu Keluarga</CusttomInputLabel>}
+          rules={[{ required: true, message: 'NKK diperlukan!' }]}
+        >
+          <Input
+            className="rounded-xl border-2"
+            placeholder="3522xxxxxxxxxxxx"
+          />
+        </Form.Item>
       </div>
-
-      <Form.Item
-        name="kk_id"
-        label={<CusttomInputLabel>Nomor Kartu Keluarga</CusttomInputLabel>}
-        rules={[{ required: true, message: 'NKK diperlukan!' }]}
-      >
-        <Input className="rounded-xl border-2" placeholder="3522xxxxxxxxxxxx" />
-      </Form.Item>
-
       <Form.Item
         name="reason"
         label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}

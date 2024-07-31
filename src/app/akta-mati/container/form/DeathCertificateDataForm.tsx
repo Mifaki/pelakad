@@ -97,17 +97,15 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
           }
           rules={[{ required: true, message: 'SPTJM diperlukan!' }]}
         >
-          <div className="grid grid-cols-[1fr_auto] items-center gap-2">
-            <CloudUpload name="sptjm_url" form={form} multipleFile={false} />
-            <div className="flex items-center">
-              <p className="mr-4 text-xs font-semibold">
-                SPTJM Kebenaran Kematian
-              </p>
-              <DownloadButton
-                downloadUrl="https://utfs.io/f/afc02a25-e3c0-4a2c-af70-85ec62db79c6-vc9lgq.pdf"
-                fileName="SPTJM Kebenaran Kematian"
-              />
-            </div>
+          <CloudUpload name="sptjm_url" form={form} multipleFile={false} />
+          <div className="flex items-center">
+            <p className="mr-4 mt-2 text-xs font-semibold">
+              SPTJM Kebenaran Kematian
+            </p>
+            <DownloadButton
+              downloadUrl="https://utfs.io/f/afc02a25-e3c0-4a2c-af70-85ec62db79c6-vc9lgq.pdf"
+              fileName="SPTJM Kebenaran Kematian"
+            />
           </div>
         </Form.Item>
         <Form.Item
@@ -124,21 +122,19 @@ const DeathCertificateDataForm = ({ form }: IDeathCertificateDataForm) => {
             },
           ]}
         >
-          <div className="grid grid-cols-[1fr_auto] items-center gap-2">
-            <CloudUpload
-              name="statement_letter_of_true_death_data_url"
-              form={form}
-              multipleFile={false}
+          <CloudUpload
+            name="statement_letter_of_true_death_data_url"
+            form={form}
+            multipleFile={false}
+          />
+          <div className="flex items-center">
+            <p className="mr-4 text-xs font-semibold">
+              Surat Pernyataan Data Benar Kematian
+            </p>
+            <DownloadButton
+              downloadUrl="https://utfs.io/f/a14d50ca-642c-42bb-90ab-bec29a6fdaef-dsevay.docx.pdf"
+              fileName="Surat Pernyataan Data Benar Kematian"
             />
-            <div className="flex items-center">
-              <p className="mr-4 text-xs font-semibold">
-                Surat Pernyataan Data Benar Kematian
-              </p>
-              <DownloadButton
-                downloadUrl="https://utfs.io/f/a14d50ca-642c-42bb-90ab-bec29a6fdaef-dsevay.docx.pdf"
-                fileName="Surat Pernyataan Data Benar Kematian"
-              />
-            </div>
           </div>
         </Form.Item>
       </div>
