@@ -1,6 +1,6 @@
 {
-  "id": "e502bae2-ad7a-44f0-a2c4-cfb8625451f6",
-  "prevId": "4182d204-c909-44d4-a413-0da0b967caef",
+  "id": "2d8a4843-d942-4bac-b12c-5b90300f691d",
+  "prevId": "e502bae2-ad7a-44f0-a2c4-cfb8625451f6",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -50,8 +50,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "out_of_wedlock_image_url": {
-          "name": "out_of_wedlock_image_url",
+        "out_of_wedlock_letter_url": {
+          "name": "out_of_wedlock_letter_url",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
