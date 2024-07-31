@@ -3,6 +3,7 @@ import ButtonFooter from '../Button/ButtonFooter';
 
 import { InstagramIcon } from '../icon/InstagramIcon';
 import { FacebookIcon } from '../icon/FacebookIcon';
+import { TikTokIcon } from '../icon/TiktokIcon';
 
 const Footer = ({ id }: { id?: string }) => {
   return (
@@ -53,11 +54,11 @@ const Footer = ({ id }: { id?: string }) => {
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <ButtonFooter
                   icon={<InstagramIcon />}
-                  redirect_url="https://www.instagram.com/dawuhan.poncokusumo/"
+                  redirect_url="https://www.instagram.com/mmd_filkom_40_dawuhan/"
                 />
                 <ButtonFooter
-                  icon={<FacebookIcon />}
-                  redirect_url="https://www.facebook.com/dawuhan.poncokusumo/"
+                  icon={<TikTokIcon />}
+                  redirect_url="https://www.tiktok.com/@mmd.40.filkom"
                 />
               </div>
             </div>

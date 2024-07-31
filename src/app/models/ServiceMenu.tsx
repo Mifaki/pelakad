@@ -31,7 +31,7 @@ export const SERVICE_DATA: IServiceMenu[] = [
   {
     id: 4,
     title: 'Akta Kematian',
-    desc: 'Pelayanan pendampingan dan pelaporan bagi korban kekerasan seksual dan perundungan',
+    desc: 'Pelayanan pembuatan Akta Kematian secara online melalui layanan kami dengan cepat dan mudah.',
     redirect_url: '/akta-mati',
     image_url:
       'https://utfs.io/f/ddb23995-3dd4-4af0-b7af-4db7df465742-1wh9r.png',

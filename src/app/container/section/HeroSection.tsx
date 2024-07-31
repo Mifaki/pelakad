@@ -9,7 +9,7 @@ const HeroSection = ({ id }: { id: string }) => {
       <div className="container relative flex h-[calc(80vh-150px)] max-w-[100vw] flex-col items-center md:flex-row">
         <h1 className="mb-10 text-center text-heading-3 font-bold leading-[45px] sm:text-heading-2 md:text-left md:text-heading-1 md:leading-[60px]">
           Selamat Datang di{' '}
-          <span className="text-pd-accent">Pengajuan Layanan </span> Masyarkat
+          <span className="text-pd-accent">Pengajuan Layanan </span> Masyarakat
           Dawuhan
         </h1>
         <div className="relative h-[340px] w-full md:h-[420px] lg:h-[500px]">
