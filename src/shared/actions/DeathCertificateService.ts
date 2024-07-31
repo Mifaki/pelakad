@@ -12,6 +12,9 @@ import {
   type IAktaMatiPayload,
   type IRootDeathCertificate,
 } from '../models/aktamatiinterfaces';
+import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
+import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
+import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
 
 export async function addDeathCertificateRequest(
   payload: IAktaMatiPayload,
@@ -112,6 +115,8 @@ export async function getAllDeathCertificateRequests(): Promise<
     result.isLoading = false;
   }
 
+  console.log(result);
+
   return result;
 }
 
@@ -156,7 +161,7 @@ export async function getDeathCertificateRequestById(
 
 export async function updateDeathCertificateRequest(
   id: string,
-  status: 'selesai' | 'diproses',
+  status: 'selesai' | 'diproses' | 'tanda-tangan',
 ): Promise<IGeneralAPIResponse<IRootDeathCertificate>> {
   const result: IGeneralAPIResponse<IRootDeathCertificate> = {
     data: null,
@@ -177,6 +182,26 @@ export async function updateDeathCertificateRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as IRootDeathCertificate;
+
+      if (updatedRequest.request_status === 'tanda-tangan') {
+        const whatsappUrl = createSignatureWhatsappUrl(
+          updatedRequest.phone_number,
+          'Akta Kematian',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
+
+      if (updatedRequest.request_status === 'selesai') {
+        const whatsappUrl = createFinishWhatsappUrl(
+          updatedRequest.phone_number,
+          'Akta Kematian',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
     } else {
       throw new Error('Death certificate request not found');
     }
@@ -212,6 +237,15 @@ export async function declineDeathCertificateRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as IRootDeathCertificate;
+
+      const whatsappUrl = createDeclineWhatsappUrl(
+        updatedRequest.phone_number,
+        'Akta Kematian',
+        feedback,
+        updatedRequest.full_name,
+      );
+
+      result.whatsappRedirectUrl = whatsappUrl;
     } else {
       throw new Error('Death certificate request not found');
     }
