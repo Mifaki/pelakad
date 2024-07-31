@@ -28,15 +28,18 @@ const AddKTPRequestForm = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-      <div className="w-full basis-1/2">
-        <Form.Item
-          name="contact"
-          label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
-          rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
-        >
-          <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
-        </Form.Item>
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="mb-4">
+          <Form.Item
+            name="contact"
+            label={<CusttomInputLabel>Nomor Telepon</CusttomInputLabel>}
+            rules={[{ required: true, message: 'Nomor telepon diperlukan!' }]}
+          >
+            <Input className="rounded-xl border-2" placeholder="08xxxxxxxxxx" />
+          </Form.Item>
+        </div>
+
         <Form.Item
           name="full_name"
           label={<CusttomInputLabel>Nama Lengkap</CusttomInputLabel>}
@@ -47,20 +50,21 @@ const AddKTPRequestForm = ({
             placeholder="Masukkan nama lengkap"
           />
         </Form.Item>
-      </div>
 
-      <div className="w-full basis-1/2 gap-4">
-        <Form.Item
-          name="nik_id"
-          label={<CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>}
-          rules={[{ required: true, message: 'NIK diperlukan!' }]}
-        >
-          <Input
-            className="rounded-xl border-2"
-            placeholder="3522xxxxxxxxxxxx"
-          />
-        </Form.Item>
-
+        <div className="mb-4">
+          <Form.Item
+            name="nik_id"
+            label={
+              <CusttomInputLabel>No. Induk Kependudukan</CusttomInputLabel>
+            }
+            rules={[{ required: true, message: 'NIK diperlukan!' }]}
+          >
+            <Input
+              className="rounded-xl border-2"
+              placeholder="3522xxxxxxxxxxxx"
+            />
+          </Form.Item>
+        </div>
         <Form.Item
           name="kk_id"
           label={<CusttomInputLabel>Nomor Kartu Keluarga</CusttomInputLabel>}
@@ -71,25 +75,25 @@ const AddKTPRequestForm = ({
             placeholder="3522xxxxxxxxxxxx"
           />
         </Form.Item>
-
-        <Form.Item
-          name="reason"
-          label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
-          rules={[
-            {
-              required: true,
-              message: 'Pilih salah satu alasan pengajuan!',
-            },
-          ]}
-        >
-          <Radio.Group onChange={onRadioChange} value={radioValue}>
-            <Radio value="baru">Baru</Radio>
-            <Radio value="pindah_datang">Pindah Datang</Radio>
-            <Radio value="hilang">Hilang/Rusak</Radio>
-          </Radio.Group>
-        </Form.Item>
       </div>
-    </div>
+
+      <Form.Item
+        name="reason"
+        label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
+        rules={[
+          {
+            required: true,
+            message: 'Pilih salah satu alasan pengajuan!',
+          },
+        ]}
+      >
+        <Radio.Group onChange={onRadioChange} value={radioValue}>
+          <Radio value="baru">Baru</Radio>
+          <Radio value="pindah_datang">Pindah Datang</Radio>
+          <Radio value="hilang">Hilang/Rusak</Radio>
+        </Radio.Group>
+      </Form.Item>
+    </>
   );
 };
 
