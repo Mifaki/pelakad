@@ -1,5 +1,6 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Row, Space, type TableProps, Tag } from 'antd';
+'use client';
+
+import { Button, Space, type TableProps, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 
 const useGenerateColumnAdminUser = () => {
@@ -25,8 +26,8 @@ const useGenerateColumnAdminUser = () => {
     },
     {
       title: 'No Handphone',
-      dataIndex: 'phone_number',
-      key: 'phone_number',
+      dataIndex: 'contact',
+      key: 'contact',
       render: (text) => <a>{text}</a>,
     },
     {
@@ -55,26 +56,12 @@ const useGenerateColumnAdminUser = () => {
       dataIndex: '',
       key: 'actions',
       render: ({ id }) => (
-        <Row gutter={[12, 12]}>
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  label: 'Detail',
-                  key: '1',
-                  onClick: () => router.push(`/dashboard/ktp/` + id),
-                },
-              ],
-            }}
-          >
-            <Button className="bg-ny-primary-100 text-ny-primary-500 hover:!bg-ny-primary-100 hover:!text-ny-primary-500 text-caption-1">
-              <Space>
-                Actions
-                <DownOutlined />
-              </Space>
-            </Button>
-          </Dropdown>
-        </Row>
+        <Button
+          className="bg-ny-primary-100 text-ny-primary-500 hover:!bg-ny-primary-100 hover:!text-ny-primary-500 text-caption-1"
+          onClick={() => router.push(`/dashboard/ktp/` + id)}
+        >
+          <Space>Detail</Space>
+        </Button>
       ),
     },
   ];

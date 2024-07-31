@@ -15,6 +15,11 @@ export const useKTPRequestDetail = (data: IRootKTP | null) => {
       request_status: data.request_status,
       family_card_url: data.family_card_url,
       birth_certificate_url: data.birth_certificate_url,
+      foreign_move_cert_url: data.foreign_move_cert_url,
+      damaged_ktp_url: data.damaged_ktp_url,
+      police_report_url: data.police_report_url,
+      marriage_book_url: data.marriage_book_url,
+      feedback: data.feedback,
     });
   }
 
