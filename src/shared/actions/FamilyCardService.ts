@@ -268,7 +268,7 @@ export async function declineFamilyCardRequest(
 
       const whatsappUrl = createDeclineWhatsappUrl(
         updatedRequest.phone_number,
-        'Akta Kelahiran',
+        'Kartu Keluarga',
         feedback,
         updatedRequest.full_name,
       );
