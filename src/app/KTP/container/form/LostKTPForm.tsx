@@ -25,11 +25,7 @@ type IAddKTPRequestForm = {
   handleMutate: (values: IPayloadKTP) => Promise<void>;
 };
 
-const LostKTPForm = ({
-  form,
-  handleRadioChange,
-  handleMutate,
-}: IAddKTPRequestForm) => {
+const LostKTPForm = ({ form }: { form: FormInstance<any> }) => {
   const [showAdditionalOptionsLost, setShowAdditionalOptionsLost] =
     useState(false);
   const [showAdditionalOptionsBroken, setShowAdditionalOptionsBroken] =
@@ -46,11 +42,11 @@ const LostKTPForm = ({
   const AdditionalOptionsLost = () => (
     <div>
       <Form.Item
-        name="broken_identity_card"
+        name="damaged_ktp_url"
         label={<CusttomInputLabel>KTP-El Rusak</CusttomInputLabel>}
         rules={[{ required: true, message: 'KTP-El Rusak diperlukan!' }]}
       >
-        <CloudUpload name="broken_identity_card" form={form} />
+        <CloudUpload name="damaged_ktp_url" form={form} />
       </Form.Item>
     </div>
   );
@@ -58,7 +54,7 @@ const LostKTPForm = ({
   const AdditionalOptionsBroken = () => (
     <div>
       <Form.Item
-        name="missing_certificate_from_police"
+        name="police_report_url"
         label={
           <CusttomInputLabel>
             Surat keterangan hilang dari kepolisian
@@ -71,88 +67,78 @@ const LostKTPForm = ({
           },
         ]}
       >
-        <CloudUpload name="missing_certificate_from_police" form={form} />
+        <CloudUpload name="police_report_url" form={form} />
       </Form.Item>
     </div>
   );
 
   return (
-    <Form<IPayloadKTP>
-      form={form}
-      layout="vertical"
-      onFinish={handleMutate}
-      className="p-4"
-    >
-      <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
-        <div className="w-full basis-1/2">
-          <Form.Item
-            name="alasanPengajuan"
-            label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
-            rules={[
-              {
-                required: true,
-                message: 'Pilih salah satu alasan pengajuan!',
-              },
-            ]}
-          >
-            <Radio.Group onChange={onRadioChange} value={radioValue}>
-              <Radio value="hilang">Hilang</Radio>
-              <Radio value="rusak">Rusak</Radio>
-            </Radio.Group>
-          </Form.Item>
+    <div className="flex flex-col items-center gap-0 md:flex-row md:gap-4">
+      <div className="w-full basis-1/2">
+        <Form.Item
+          name="alasanPengajuan"
+          label={<CusttomInputLabel>Alasan Pengajuan</CusttomInputLabel>}
+          rules={[
+            {
+              required: true,
+              message: 'Pilih salah satu alasan pengajuan!',
+            },
+          ]}
+        >
+          <Radio.Group onChange={onRadioChange} value={radioValue}>
+            <Radio value="hilang">Hilang</Radio>
+            <Radio value="rusak">Rusak</Radio>
+          </Radio.Group>
+        </Form.Item>
 
-          <Form.Item
-            name="birth_certificate_image"
-            label={
-              <CusttomInputLabel>
-                Akta Kelahiran<span className="text-gray-600"></span>
-              </CusttomInputLabel>
-            }
-            rules={[{ required: true, message: 'Akta Kelahiran diperlukan!' }]}
-          >
-            <CloudUpload name="birth_certificate_image" form={form} />
-          </Form.Item>
+        <Form.Item
+          name="birth_certificate_url"
+          label={
+            <CusttomInputLabel>
+              Akta Kelahiran<span className="text-gray-600"></span>
+            </CusttomInputLabel>
+          }
+          rules={[{ required: true, message: 'Akta Kelahiran diperlukan!' }]}
+        >
+          <CloudUpload name="birth_certificate_url" form={form} />
+        </Form.Item>
 
-          <Form.Item
-            name="family_card_image"
-            label={
-              <CusttomInputLabel>
-                Kartu Keluarga<span className="text-gray-600"></span>
-              </CusttomInputLabel>
-            }
-            rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
-          >
-            <CloudUpload name="family_card_image" form={form} />
-          </Form.Item>
+        <Form.Item
+          name="family_card_url"
+          label={
+            <CusttomInputLabel>
+              Kartu Keluarga<span className="text-gray-600"></span>
+            </CusttomInputLabel>
+          }
+          rules={[{ required: true, message: 'Kartu keluarga diperlukan!' }]}
+        >
+          <CloudUpload name="family_card_url" form={form} />
+        </Form.Item>
 
-          <Form.Item
-            name="marriage_book_url"
-            label={
-              <CusttomInputLabel>
-                Buku nikah
-                <span className="text-gray-600">
-                  {' '}
-                  / Kutipan Akta Perkawinan
-                </span>
-              </CusttomInputLabel>
-            }
-            rules={[
-              {
-                required: true,
-                message: 'Buku nikah Legalisir KUA diperlukan!',
-              },
-            ]}
-          >
-            <CloudUpload name="marriage_book_url" form={form} />
-          </Form.Item>
+        <Form.Item
+          name="marriage_book_url"
+          label={
+            <CusttomInputLabel>
+              Buku nikah
+              <span className="text-gray-600"> / Kutipan Akta Perkawinan</span>
+            </CusttomInputLabel>
+          }
+          rules={[
+            {
+              required: true,
+              message: 'Buku nikah Legalisir KUA diperlukan!',
+            },
+          ]}
+        >
+          <CloudUpload name="marriage_book_url" form={form} />
+        </Form.Item>
 
-          <Form.Item>
-            {showAdditionalOptionsLost && <AdditionalOptionsLost />}
-            {showAdditionalOptionsBroken && <AdditionalOptionsBroken />}
-          </Form.Item>
-        </div>
+        <Form.Item>
+          {showAdditionalOptionsLost && <AdditionalOptionsLost />}
+          {showAdditionalOptionsBroken && <AdditionalOptionsBroken />}
+        </Form.Item>
       </div>
-    </Form>
+    </div>
   );
 };
 

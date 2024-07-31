@@ -9,12 +9,13 @@ export interface IRootKTP extends IGeneralRequest {
   full_name: string;
   nik_id: string;
   kk_id: string;
-  reason: TRequestReason;
+  reason: string;
   family_card_url: string;
   birth_certificate_url: string;
-  foreign_move_cert_url?: string;
-  damaged_ktp_url?: string;
-  police_report_url?: string;
+  foreign_move_cert_url: string;
+  damaged_ktp_url: string;
+  police_report_url: string;
+  marriage_book_url: string[];
 }
 
 export interface IPayloadKTP {
@@ -22,15 +23,11 @@ export interface IPayloadKTP {
   full_name: string;
   nik_id: string;
   kk_id: string;
-  reason: TRequestReason;
+  reason: string;
   family_card_url: string;
   birth_certificate_url: string;
-  foreign_move_cert_url?: string;
-  damaged_ktp_url?: string;
-  police_report_url?: string;
-  marriage_book_url: string[];
-}
-
-export interface IKTPRelatedImages {
+  foreign_move_cert_url: string;
+  damaged_ktp_url: string;
+  police_report_url: string;
   marriage_book_url: string[];
 }
