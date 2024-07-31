@@ -2,125 +2,114 @@
 
 import { Form, type FormInstance, Input } from 'antd';
 import React from 'react';
+import DashboardImage from '~/shared/container/dashboard-image/DashboardImage';
 
 type IDetailKTPRequestForm = {
   form?: FormInstance<any>;
-  onAccept?: any;
-  onDecline?: any;
   id?: string;
 };
 
-const DetailKTPRequestForm = ({ form, onAccept }: IDetailKTPRequestForm) => {
+const DetailKTPRequestForm = ({ form }: IDetailKTPRequestForm) => {
   return (
     <Form form={form} layout="vertical" className="flex flex-col gap-[20px]">
       <div className="flex w-full flex-col sm:flex-row sm:gap-4">
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
-          className="my-[8px] w-full sm:w-1/2"
-          name={'id'}
-          label="ID"
-        >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400]"
-            readOnly
-          />
+        <Form.Item className="my-[8px] w-full sm:w-1/2" name="id" label="ID">
+          <Input readOnly />
         </Form.Item>
         <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
           className="my-[8px] w-full sm:w-1/2"
-          name={'full_name'}
+          name="full_name"
           label="Nama Pemohon"
         >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400]"
-            readOnly
-          />
+          <Input readOnly />
         </Form.Item>
       </div>
       <div className="flex w-full flex-col sm:flex-row sm:gap-4">
         <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
           className="my-[8px] w-full sm:w-1/2"
-          name={'phone_number'}
+          name="contact"
           label="No. Handphone"
         >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400]"
-            readOnly
-          />
+          <Input readOnly />
         </Form.Item>
         <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
           className="my-[8px] w-full sm:w-1/2"
-          name={'nik_id'}
+          name="nik_id"
           label="No. NIK"
         >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400]"
-            readOnly
-          />
+          <Input readOnly />
         </Form.Item>
       </div>
       <div className="flex w-full flex-col sm:flex-row sm:gap-4">
         <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
           className="my-[8px] w-full sm:w-1/2"
-          name={'kk_id'}
+          name="kk_id"
           label="No. KK"
         >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400]"
-            readOnly
-          />
+          <Input readOnly />
         </Form.Item>
         <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Please select postal code!',
-            },
-          ]}
           className="my-[8px] w-full sm:w-1/2"
-          name={'reason'}
+          name="reason"
           label="Alasan Pengajuan"
         >
-          <Input
-            placeholder="Enter your detail here"
-            className="custom-input h-[40px] w-full rounded-[8px] text-caption-1 font-[400] capitalize"
-            readOnly
-          />
+          <Input readOnly />
         </Form.Item>
       </div>
+      <Form.Item
+        className="my-[8px] w-full"
+        name="family_card_url"
+        label="Kartu Keluarga"
+      >
+        <DashboardImage src={form?.getFieldValue('family_card_url')} />
+      </Form.Item>
+      <Form.Item
+        className="my-[8px] w-full"
+        name="birth_certificate_url"
+        label="Akta Kelahiran"
+      >
+        <DashboardImage src={form?.getFieldValue('birth_certificate_url')} />
+      </Form.Item>
+      {form?.getFieldValue('foreign_move_cert_url') && (
+        <Form.Item
+          className="my-[8px] w-full"
+          name="foreign_move_cert_url"
+          label="Surat Keterangan Pindah Luar Negeri"
+        >
+          <DashboardImage src={form?.getFieldValue('foreign_move_cert_url')} />
+        </Form.Item>
+      )}
+      {form?.getFieldValue('damaged_ktp_url') && (
+        <Form.Item
+          className="my-[8px] w-full"
+          name="damaged_ktp_url"
+          label="KTP Rusak"
+        >
+          <DashboardImage src={form?.getFieldValue('damaged_ktp_url')} />
+        </Form.Item>
+      )}
+      {form?.getFieldValue('police_report_url') && (
+        <Form.Item
+          className="my-[8px] w-full"
+          name="police_report_url"
+          label="Laporan Kepolisian"
+        >
+          <DashboardImage src={form?.getFieldValue('police_report_url')} />
+        </Form.Item>
+      )}
+      {form?.getFieldValue('marriage_book_url')?.length > 0 && (
+        <Form.Item
+          className="my-[8px] w-full"
+          name="marriage_book_url"
+          label="Buku Nikah"
+        >
+          {form
+            ?.getFieldValue('marriage_book_url')
+            .map((url: string, index: number) => (
+              <DashboardImage key={index} src={url} />
+            ))}
+        </Form.Item>
+      )}
     </Form>
   );
 };
