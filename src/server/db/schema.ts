@@ -64,7 +64,7 @@ export const birthCertificateRequest = createTable(
     mother_identity_card_url: varchar('mother_identity_card_url', {
       length: 256,
     }).notNull(),
-    out_of_wedlock_letter_url: varchar('out_of_wedlock_image_url', {
+    out_of_wedlock_letter_url: varchar('out_of_wedlock_letter_url', {
       length: 256,
     }),
     request_status: requestStatusEnum('request_status').notNull(),

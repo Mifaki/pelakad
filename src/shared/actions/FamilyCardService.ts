@@ -7,6 +7,9 @@ import {
   marriageBookImages,
   requestStatusEnum,
 } from '~/server/db/schema';
+import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
+import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
+import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
 import { type IGeneralAPIResponse } from '../models/generalInterfaces';
 import {
   type IFamilyCardPayload,
@@ -186,7 +189,7 @@ export async function getFamilyCardRequestById(
 
 export async function updateFamilyCardRequest(
   id: string,
-  status: 'selesai' | 'diproses',
+  status: 'selesai' | 'diproses' | 'tanda-tangan',
 ): Promise<IGeneralAPIResponse<IRootFamilyCardRequest>> {
   const result: IGeneralAPIResponse<IRootFamilyCardRequest> = {
     data: null,
@@ -207,6 +210,26 @@ export async function updateFamilyCardRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as unknown as IRootFamilyCardRequest;
+
+      if (updatedRequest.request_status === 'tanda-tangan') {
+        const whatsappUrl = createSignatureWhatsappUrl(
+          updatedRequest.phone_number,
+          'Kartu Keluarga',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
+
+      if (updatedRequest.request_status === 'selesai') {
+        const whatsappUrl = createFinishWhatsappUrl(
+          updatedRequest.phone_number,
+          'Kartu Keluarga',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
     } else {
       throw new Error('Family card request not found');
     }
@@ -242,6 +265,15 @@ export async function declineFamilyCardRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as unknown as IRootFamilyCardRequest;
+
+      const whatsappUrl = createDeclineWhatsappUrl(
+        updatedRequest.phone_number,
+        'Akta Kelahiran',
+        feedback,
+        updatedRequest.full_name,
+      );
+
+      result.whatsappRedirectUrl = whatsappUrl;
     } else {
       throw new Error('Family card request not found');
     }

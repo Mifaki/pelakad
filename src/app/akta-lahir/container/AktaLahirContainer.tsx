@@ -81,7 +81,6 @@ const AktaLahirContainer = () => {
           allFormData.witness_2_identity_card_url,
         ),
         marriage_book_url: ensureArray(allFormData.marriage_book_url),
-        out_of_wedlock_image_url: allFormData.out_of_wedlock_image_url,
       };
 
       await submitBirthCertificateRequest(payload);
