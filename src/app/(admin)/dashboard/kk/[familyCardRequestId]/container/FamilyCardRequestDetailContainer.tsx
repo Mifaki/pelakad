@@ -38,11 +38,30 @@ const FamilyCardRequestDetailContainer = ({
     }
   };
 
+  const handleSignature = async () => {
+    try {
+      const result = await updateFamilyCardRequest(id, 'tanda-tangan');
+      message.success('Berhasil update permohonan Kartu Keluarga');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
+    } catch (error) {
+      message.error(
+        'Gagal update permohonan Kartu Keluarga, silahkan coba kembali',
+      );
+    }
+  };
+
   const handleDeclineSubmit = async () => {
     try {
-      await declineFamilyCardRequest(id, modalState.feedback);
+      const result = await declineFamilyCardRequest(id, modalState.feedback);
       closeModal();
       message.success('Berhasil menolak permohonan Kartu Keluarga');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error(
         'Gagal menolak permohonan Kartu Keluarga, silahkan coba kembali',
@@ -52,8 +71,12 @@ const FamilyCardRequestDetailContainer = ({
 
   const handleFinish = async () => {
     try {
-      await updateFamilyCardRequest(id, 'selesai');
+      const result = await updateFamilyCardRequest(id, 'selesai');
       message.success('Berhasil update permohonan Kartu Keluarga');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error(
         'Gagal update permohonan Kartu Keluarga, silahkan coba kembali',
@@ -68,6 +91,7 @@ const FamilyCardRequestDetailContainer = ({
         onAccept={handleAccept}
         onDecline={() => openModal(id)}
         onFinish={handleFinish}
+        onSignature={handleSignature}
         requestStatus={data?.request_status ?? 'menunggu'}
       />
       <DetailFamilyCardForm form={form} id={id} />

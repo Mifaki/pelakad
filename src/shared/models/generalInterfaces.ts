@@ -2,6 +2,7 @@ export interface IGeneralAPIResponse<T> {
   data: T | null;
   error: Error | null;
   isLoading: boolean;
+  whatsappRedirectUrl?: string;
 }
 
 export interface IGeneralRequest {

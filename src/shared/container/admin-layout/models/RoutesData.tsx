@@ -1,6 +1,9 @@
+import { BirthCertificateIcon } from '../../icon/BirthCertificateIcon';
 import { DashboardIcon } from '../../icon/DashboardIcon';
+import { DeathCertificateIcon } from '../../icon/DeathCertificateIcon';
+import { KkIcon } from '../../icon/KkIcon';
+import { KTPIcon } from '../../icon/KTPIcon';
 import { type ItemsDataI } from './type';
-import DashboardContainer from '~/app/(admin)/dashboard/container/DashboardContainer';
 
 export const ADMIN_ROUTES: ItemsDataI[] = [
   {
@@ -12,7 +15,6 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
     key: '/dashboard',
     path: 'dashboard',
     icon: <DashboardIcon />,
-    components: <DashboardContainer />,
     show: true,
   },
   {
@@ -21,40 +23,36 @@ export const ADMIN_ROUTES: ItemsDataI[] = [
     ),
     key: '/dashboard/ktp',
     path: 'dashboard-ktp',
-    icon: <DashboardIcon />,
-    components: <DashboardContainer />,
+    icon: <KTPIcon />,
     show: true,
   },
   {
     label: <div className="text-ny-gray-300 text-caption-1 font-[400]">KK</div>,
     key: '/dashboard/kk',
     path: 'dashboard-kk',
-    icon: <DashboardIcon />,
-    components: <DashboardContainer />,
+    icon: <KkIcon />,
     show: true,
   },
   {
     label: (
       <div className="text-ny-gray-300 text-caption-1 font-[400]">
-        Akte Kelahiran
+        Akta Kelahiran
       </div>
     ),
-    key: '/dashboard/akte-kelahiran',
-    path: 'dashboard-akte-kelahiran',
-    icon: <DashboardIcon />,
-    components: <DashboardContainer />,
+    key: '/dashboard/akta-lahir',
+    path: 'dashboard-akta-lahir',
+    icon: <BirthCertificateIcon />,
     show: true,
   },
   {
     label: (
       <div className="text-ny-gray-300 text-caption-1 font-[400]">
-        Akte kematian
+        Akta kematian
       </div>
     ),
-    key: '/dashboard/akte-kematian',
-    path: 'dashboard-akte-kematian',
-    icon: <DashboardIcon />,
-    components: <DashboardContainer />,
+    key: '/dashboard/akta-mati',
+    path: 'dashboard-akta-mati',
+    icon: <DeathCertificateIcon />,
     show: true,
   },
 ];

@@ -10,6 +10,7 @@ interface ICloudUpload {
   label?: string;
   form: any;
   multipleFile?: boolean;
+  classname?: string;
 }
 
 const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
@@ -90,7 +91,7 @@ const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
           icon={<UploadOutlined />}
           loading={uploading}
           disabled={isUploadDisabled}
-          className="w-fu bg-pd-primary-action text-white hover:!bg-pd-primary-action hover:!text-white"
+          className="w-full bg-pd-primary-action text-white hover:!bg-pd-primary-action hover:!text-white"
         >
           {uploading
             ? 'Uploading...'

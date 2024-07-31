@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'antd';
 import { type TRequestStatus } from '~/shared/models/generalInterfaces';
 
@@ -5,6 +7,7 @@ type IAdminFormHeader = {
   onAccept: () => void;
   onDecline: () => void;
   onFinish: () => void;
+  onSignature: () => void;
   requestStatus: TRequestStatus;
 };
 
@@ -12,6 +15,7 @@ const AdminFormHeader = ({
   onAccept,
   onDecline,
   onFinish,
+  onSignature,
   requestStatus,
 }: IAdminFormHeader) => {
   const isDisabled =
@@ -26,33 +30,36 @@ const AdminFormHeader = ({
       >
         Tolak
       </Button>
-      {requestStatus === 'menunggu' ? (
-        <></>
-      ) : (
+      {requestStatus === 'selesai' && (
         <Button
           className="h-10 bg-green-500 text-body-2 text-white hover:!border-green-400 hover:!bg-green-400 hover:!text-white"
-          onClick={onFinish}
-          disabled={isDisabled}
+          disabled={true}
         >
           Selesai
         </Button>
       )}
-      {requestStatus === 'menunggu' ? (
+      {requestStatus === 'menunggu' && (
         <Button
           className="h-10 bg-orange-500 text-body-2 text-white hover:!border-orange-400 hover:!bg-orange-400 hover:!text-white"
           onClick={onAccept}
         >
           Proses
         </Button>
-      ) : requestStatus === 'diproses' ? (
-        <></>
-      ) : (
+      )}
+      {requestStatus === 'diproses' && (
         <Button
-          className="h-10 bg-orange-500 text-body-2 text-white hover:!border-orange-400 hover:!bg-orange-400 hover:!text-white"
-          onClick={onAccept}
-          disabled={true}
+          className="h-10 bg-blue-500 text-body-2 text-white hover:!border-blue-400 hover:!bg-blue-400 hover:!text-white"
+          onClick={onSignature}
         >
-          Proses
+          Tanda Tangan
+        </Button>
+      )}
+      {requestStatus === 'tanda-tangan' && (
+        <Button
+          className="h-10 bg-green-500 text-body-2 text-white hover:!border-green-400 hover:!bg-green-400 hover:!text-white"
+          onClick={onFinish}
+        >
+          Selesai
         </Button>
       )}
     </div>

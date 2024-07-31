@@ -37,11 +37,30 @@ const KTPRequestDetailContainer = ({
     }
   };
 
+  const handleSignature = async () => {
+    try {
+      const result = await updateKTPRequest(id, 'tanda-tangan');
+      message.success('Berhasil update permohonan Kartu Keluarga');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
+    } catch (error) {
+      message.error(
+        'Gagal update permohonan Kartu Keluarga, silahkan coba kembali',
+      );
+    }
+  };
+
   const handleDeclineSubmit = async () => {
     try {
-      await declineKTPRequest(id, modalState.feedback);
+      const result = await declineKTPRequest(id, modalState.feedback);
       closeModal();
       message.success('Berhasil menolak permohonan KTP');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error('Gagal menolak permohonan KTP, silahkan coba kembali');
     }
@@ -49,8 +68,12 @@ const KTPRequestDetailContainer = ({
 
   const handleFinish = async () => {
     try {
-      await updateKTPRequest(id, 'selesai');
+      const result = await updateKTPRequest(id, 'selesai');
       message.success('Berhasil update permohonan KTP');
+
+      if (result.whatsappRedirectUrl) {
+        window.open(result.whatsappRedirectUrl, '_blank');
+      }
     } catch (error) {
       message.error('Gagal update permohonan KTP, silahkan coba kembali');
     }
@@ -66,6 +89,9 @@ const KTPRequestDetailContainer = ({
         onDecline={() => openModal(id)}
         onFinish={async () => {
           await handleFinish();
+        }}
+        onSignature={async () => {
+          await handleSignature();
         }}
         requestStatus={data?.request_status ?? 'menunggu'}
       />

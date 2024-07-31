@@ -8,6 +8,9 @@ import {
   witnessIdentityCardImages,
   requestStatusEnum,
 } from '~/server/db/schema';
+import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
+import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
+import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
 import { eq } from 'drizzle-orm';
 import { type IGeneralAPIResponse } from '../models/generalInterfaces';
 import {
@@ -198,7 +201,7 @@ export async function getBirthCertificateRequestById(
 
 export async function updateBirthCertificateRequest(
   id: string,
-  status: 'selesai' | 'diproses',
+  status: 'selesai' | 'diproses' | 'tanda-tangan',
 ): Promise<IGeneralAPIResponse<IRootBirthCertificate>> {
   const result: IGeneralAPIResponse<IRootBirthCertificate> = {
     data: null,
@@ -219,6 +222,26 @@ export async function updateBirthCertificateRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as IRootBirthCertificate;
+
+      if (updatedRequest.request_status === 'tanda-tangan') {
+        const whatsappUrl = createSignatureWhatsappUrl(
+          updatedRequest.phone_number,
+          'Akta Kelahiran',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
+
+      if (updatedRequest.request_status === 'selesai') {
+        const whatsappUrl = createFinishWhatsappUrl(
+          updatedRequest.phone_number,
+          'Akta Kelahiran',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
     } else {
       throw new Error('Birth certificate request not found');
     }
@@ -254,6 +277,15 @@ export async function declineBirthCertificateRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as IRootBirthCertificate;
+
+      const whatsappUrl = createDeclineWhatsappUrl(
+        updatedRequest.phone_number,
+        'Akta Kelahiran',
+        feedback,
+        updatedRequest.full_name,
+      );
+
+      result.whatsappRedirectUrl = whatsappUrl;
     } else {
       throw new Error('Birth certificate request not found');
     }

@@ -9,6 +9,9 @@ import {
   marriageBookImages,
 } from '~/server/db/schema';
 import { type IGeneralAPIResponse } from '../models/generalInterfaces';
+import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
+import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
+import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
 
 export async function getAllKTPRequest(): Promise<
   IGeneralAPIResponse<IRootKTP[]>
@@ -87,7 +90,7 @@ export async function getKTPRequestById(
 
 export async function updateKTPRequest(
   id: string,
-  status: 'selesai' | 'diproses',
+  status: 'selesai' | 'diproses' | 'tanda-tangan',
 ): Promise<IGeneralAPIResponse<IRootKTP>> {
   const result: IGeneralAPIResponse<IRootKTP> = {
     data: null,
@@ -108,6 +111,26 @@ export async function updateKTPRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as unknown as IRootKTP;
+
+      if (updatedRequest.request_status === 'tanda-tangan') {
+        const whatsappUrl = createSignatureWhatsappUrl(
+          updatedRequest.contact,
+          'Kartu Tanda Penduduk',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
+
+      if (updatedRequest.request_status === 'selesai') {
+        const whatsappUrl = createFinishWhatsappUrl(
+          updatedRequest.contact,
+          'Kartu Tanda Penduduk',
+          updatedRequest.full_name,
+        );
+
+        result.whatsappRedirectUrl = whatsappUrl;
+      }
     } else {
       throw new Error('KTP request not found');
     }
@@ -143,6 +166,15 @@ export async function declineKTPRequest(
 
     if (updatedRequest) {
       result.data = updatedRequest as unknown as IRootKTP;
+
+      const whatsappUrl = createDeclineWhatsappUrl(
+        updatedRequest.contact,
+        'Kartu Tanda Penduduk',
+        feedback,
+        updatedRequest.full_name,
+      );
+
+      result.whatsappRedirectUrl = whatsappUrl;
     } else {
       throw new Error('KTP request not found');
     }
