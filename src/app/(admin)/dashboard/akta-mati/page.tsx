@@ -1,12 +1,18 @@
 import AdminLayout from '~/shared/container/admin-layout/AdminLayout';
-import { getAllBirthCertificateRequests } from '~/shared/actions/BirthCertificateService';
 import DashboardDeathCertificateContainer from './container/DashboardDeathCertificateContainer';
 import { getAllDeathCertificateRequests } from '~/shared/actions/DeathCertificateService';
+import { type TRequestStatus } from '~/shared/models/generalInterfaces';
 
 export const dynamic = 'force-dynamic';
 
-const page = async () => {
-  const { data, error, isLoading } = await getAllDeathCertificateRequests();
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { status?: TRequestStatus };
+}) => {
+  const status = searchParams.status;
+  const { data, error, isLoading } =
+    await getAllDeathCertificateRequests(status);
   return (
     <AdminLayout>
       <DashboardDeathCertificateContainer
@@ -18,4 +24,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

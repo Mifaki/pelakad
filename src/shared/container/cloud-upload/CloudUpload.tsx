@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Upload, message, Progress } from 'antd';
+import { Button, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 
@@ -28,9 +28,7 @@ const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
     );
 
     if (validFiles.length !== newFileList.length) {
-      message.error(
-        'Some files were removed because they exceed the 2MB limit.',
-      );
+      message.error('Gambar tidak dapat melebihi 2MB');
     }
 
     setFileList(validFiles);
@@ -52,13 +50,13 @@ const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
         });
 
         if (!response.ok) {
-          throw new Error('Upload failed');
+          throw new Error('Gagal upload gambar silahkan coba kembali');
         }
 
         const data = await response.json();
         form.setFieldsValue({ [name]: data.urls });
       } catch (error) {
-        message.error('Failed to upload files');
+        message.error('Gagal upload gambar silahkan coba kembali');
       } finally {
         setUploading(false);
       }
@@ -81,7 +79,7 @@ const CloudUpload = ({ name, form, multipleFile = true }: ICloudUpload) => {
     <div>
       <Upload
         multiple={multipleFile}
-        beforeUpload={() => false}
+        accept="image/png"
         onChange={handleChange}
         onRemove={handleRemove}
         fileList={fileList}

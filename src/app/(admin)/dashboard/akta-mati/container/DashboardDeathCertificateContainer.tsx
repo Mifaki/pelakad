@@ -1,22 +1,43 @@
 'use client';
 
-import { useForm } from 'antd/es/form/Form';
-import PageTitle from '~/shared/container/page-title/PageTitle';
-import { type IRootDeathCertificate } from '~/shared/models/aktamatiinterfaces';
+import { Form, Select } from 'antd';
 import { type IGeneralAPIResponse } from '~/shared/models/generalInterfaces';
-import useGenerateDeathCertificateColumn from '../usecase/useGenerateColumn';
+import { type IRootDeathCertificate } from '~/shared/models/aktamatiinterfaces';
+import { useForm } from 'antd/es/form/Form';
+import { useRouter, useSearchParams } from 'next/navigation';
 import DashboardTable from '~/shared/container/dashboard-table/DashboardTable';
 import PageFilter from '~/shared/container/page-filter/PageFilter';
-import { Form, Select } from 'antd';
+import PageTitle from '~/shared/container/page-title/PageTitle';
+import useGenerateDeathCertificateColumn from '../usecase/useGenerateColumn';
 
 const DashboardDeathCertificateContainer = ({
   data,
   error,
   isLoading,
-}: IGeneralAPIResponse<IRootDeathCertificate[]>) => {
+  initialStatus,
+}: IGeneralAPIResponse<IRootDeathCertificate[]> & {
+  initialStatus?: string;
+}) => {
   const [form] = useForm();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { columns } = useGenerateDeathCertificateColumn();
+
+  const handleFilter = (values: { status: string }) => {
+    const params = new URLSearchParams(searchParams);
+    if (values.status && values.status !== 'default') {
+      params.set('status', values.status);
+    } else {
+      params.delete('status');
+    }
+    router.push(`?${params.toString()}`);
+  };
+
+  const clearFilter = () => {
+    form.setFieldsValue({ status: 'default' });
+    router.push('/dashboard/akta-mati');
+  };
 
   return (
     <div>
@@ -28,13 +49,13 @@ const DashboardDeathCertificateContainer = ({
         filterComponents={
           <PageFilter
             form={form}
-            onApplyFilter={() => console.log('Filter')}
-            onClearFilter={() => console.log('Filter')}
+            onApplyFilter={handleFilter}
+            onClearFilter={clearFilter}
             filterComponents={
               <>
                 <Form.Item
-                  name={'status'}
-                  initialValue={'default'}
+                  name="status"
+                  initialValue={initialStatus ?? 'default'}
                   className="my-[10px]"
                 >
                   <Select
@@ -43,6 +64,8 @@ const DashboardDeathCertificateContainer = ({
                       { value: 'default', label: 'All' },
                       { value: 'menunggu', label: 'Menunggu' },
                       { value: 'dikembalikan', label: 'Dikembalikan' },
+                      { value: 'diproses', label: 'Diproses' },
+                      { value: 'tanda-tangan', label: 'Tanda Tangan' },
                       { value: 'selesai', label: 'Selesai' },
                     ]}
                   />

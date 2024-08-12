@@ -10,12 +10,15 @@ import {
 import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
 import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
 import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
-import { type IGeneralAPIResponse } from '../models/generalInterfaces';
+import {
+  type TRequestStatus,
+  type IGeneralAPIResponse,
+} from '../models/generalInterfaces';
 import {
   type IFamilyCardPayload,
   type IRootFamilyCardRequest,
 } from '../models/familycardinterfaces';
-import { eq } from 'drizzle-orm';
+import { eq, type SQL } from 'drizzle-orm';
 
 const translateReason = (reason: string): string => {
   const reasonMap: Record<string, string> = {
@@ -117,18 +120,26 @@ export async function addFamilyCardRequest(
   return result;
 }
 
-export async function getAllFamilyCardRequests(): Promise<
-  IGeneralAPIResponse<IRootFamilyCardRequest[]>
-> {
+export async function getAllFamilyCardRequests(
+  status?: TRequestStatus,
+): Promise<IGeneralAPIResponse<IRootFamilyCardRequest[]>> {
   const result: IGeneralAPIResponse<IRootFamilyCardRequest[]> = {
     data: null,
     error: null,
     isLoading: true,
   };
 
+  let whereClause: SQL | undefined;
+
+  if (status) {
+    whereClause = eq(familyCardRequest.request_status, status);
+  }
+
   try {
-    const requests =
-      (await db.query.familyCardRequest.findMany()) as unknown as IRootFamilyCardRequest[];
+    const requests = (await db
+      .select()
+      .from(familyCardRequest)
+      .where(whereClause)) as unknown as IRootFamilyCardRequest[];
     result.data = requests.map((request) => ({
       ...request,
       reason: translateReason(request.reason),
