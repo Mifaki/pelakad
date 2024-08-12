@@ -6,8 +6,11 @@ import {
   witnessIdentityCardImages,
   requestStatusEnum,
 } from '~/server/db/schema';
-import { eq } from 'drizzle-orm';
-import { type IGeneralAPIResponse } from '../models/generalInterfaces';
+import { eq, type SQL } from 'drizzle-orm';
+import {
+  type TRequestStatus,
+  type IGeneralAPIResponse,
+} from '../models/generalInterfaces';
 import {
   type IAktaMatiPayload,
   type IRootDeathCertificate,
@@ -78,19 +81,26 @@ export async function addDeathCertificateRequest(
   return result;
 }
 
-export async function getAllDeathCertificateRequests(): Promise<
-  IGeneralAPIResponse<IRootDeathCertificate[]>
-> {
+export async function getAllDeathCertificateRequests(
+  status?: TRequestStatus,
+): Promise<IGeneralAPIResponse<IRootDeathCertificate[]>> {
   const result: IGeneralAPIResponse<IRootDeathCertificate[]> = {
     data: null,
     error: null,
     isLoading: true,
   };
 
+  let whereClause: SQL | undefined;
+
+  if (status) {
+    whereClause = eq(deathCertificateRequest.request_status, status);
+  }
+
   try {
     const deathCertificateRequests = await db
       .select()
-      .from(deathCertificateRequest);
+      .from(deathCertificateRequest)
+      .where(whereClause);
 
     const requestsWithImages = await Promise.all(
       deathCertificateRequests.map(async (request) => {
@@ -114,8 +124,6 @@ export async function getAllDeathCertificateRequests(): Promise<
   } finally {
     result.isLoading = false;
   }
-
-  console.log(result);
 
   return result;
 }

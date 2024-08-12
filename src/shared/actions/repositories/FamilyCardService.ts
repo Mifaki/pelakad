@@ -16,7 +16,6 @@ export async function submitFamilyCardRequest(
 
   if (!response.ok) {
     const errorData: { error?: string } = await response.json();
-    console.log(response);
     throw new Error(errorData.error ?? 'Failed to submit Family Card request');
   }
 

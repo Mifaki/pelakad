@@ -11,8 +11,11 @@ import {
 import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
 import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
 import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
-import { eq } from 'drizzle-orm';
-import { type IGeneralAPIResponse } from '../models/generalInterfaces';
+import { eq, type SQL } from 'drizzle-orm';
+import {
+  type TRequestStatus,
+  type IGeneralAPIResponse,
+} from '../models/generalInterfaces';
 import {
   type IAktaLahirPayload,
   type IRootBirthCertificate,
@@ -96,19 +99,26 @@ export async function addBirthCertificateRequest(
   return result;
 }
 
-export async function getAllBirthCertificateRequests(): Promise<
-  IGeneralAPIResponse<IRootBirthCertificate[]>
-> {
+export async function getAllBirthCertificateRequests(
+  status?: TRequestStatus,
+): Promise<IGeneralAPIResponse<IRootBirthCertificate[]>> {
   const result: IGeneralAPIResponse<IRootBirthCertificate[]> = {
     data: null,
     error: null,
     isLoading: true,
   };
 
+  let whereClause: SQL | undefined;
+
+  if (status) {
+    whereClause = eq(birthCertificateRequest.request_status, status);
+  }
+
   try {
     const birthCertificateRequests = await db
       .select()
-      .from(birthCertificateRequest);
+      .from(birthCertificateRequest)
+      .where(whereClause);
 
     const requestsWithImages = await Promise.all(
       birthCertificateRequests.map(async (request) => {

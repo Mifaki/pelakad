@@ -1,29 +1,37 @@
 'use server';
 
 import { db } from '~/server/db';
-import { eq } from 'drizzle-orm';
+import { eq, type SQL } from 'drizzle-orm';
 import { type IPayloadKTP, type IRootKTP } from '../models/ktpinterfaces';
 import {
   ktpRequest,
   requestStatusEnum,
   marriageBookImages,
 } from '~/server/db/schema';
-import { type IGeneralAPIResponse } from '../models/generalInterfaces';
+import {
+  type TRequestStatus,
+  type IGeneralAPIResponse,
+} from '../models/generalInterfaces';
 import { createSignatureWhatsappUrl } from '../usecase/createSignatureWhatsappUrl';
 import { createFinishWhatsappUrl } from '../usecase/createFInishWhatsappUrl';
 import { createDeclineWhatsappUrl } from '../usecase/createDeclineWhatsappUrl';
 
-export async function getAllKTPRequest(): Promise<
-  IGeneralAPIResponse<IRootKTP[]>
-> {
+export async function getAllKTPRequest(
+  status?: TRequestStatus,
+): Promise<IGeneralAPIResponse<IRootKTP[]>> {
   const result: IGeneralAPIResponse<IRootKTP[]> = {
     data: null,
     error: null,
     isLoading: true,
   };
-
   try {
-    const ktprequests = await db.select().from(ktpRequest);
+    let whereClause: SQL | undefined;
+
+    if (status) {
+      whereClause = eq(ktpRequest.request_status, status);
+    }
+
+    const ktprequests = await db.select().from(ktpRequest).where(whereClause);
 
     const requestsWithImages = await Promise.all(
       ktprequests.map(async (request) => {
@@ -31,14 +39,12 @@ export async function getAllKTPRequest(): Promise<
           .select()
           .from(marriageBookImages)
           .where(eq(marriageBookImages.request_id, request.id));
-
         return {
           ...request,
           marriage_book_url: marriageBookImgs.map((img) => img.image_url),
         } as IRootKTP;
       }),
     );
-
     result.data = requestsWithImages;
   } catch (error) {
     result.error =
@@ -46,7 +52,6 @@ export async function getAllKTPRequest(): Promise<
   } finally {
     result.isLoading = false;
   }
-
   return result;
 }
 

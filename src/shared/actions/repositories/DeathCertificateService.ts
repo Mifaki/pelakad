@@ -19,7 +19,6 @@ export async function submitDeathCertificateRequest(
 
   if (!response.ok) {
     const errorData: { error?: string } = await response.json();
-    console.log(response);
     throw new Error(errorData.error ?? 'Failed to submit Akta Mati request');
   }
 
